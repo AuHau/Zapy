@@ -58,12 +58,12 @@ foreach $Obj (@Objs){
    @Meths = ();
    (@File) = `cat Methods/methods.$Obj`;
 
-   $syncFile = "Methods/Protos/$Obj.syncWithController";
+   $syncFile = "Protos/$Obj.syncWithController";
 
    if(-e $syncFile){
-      print "      Using Prototype Methods/Protos/$Obj.syncWithController\n";
+      print "      Using Prototype Protos/$Obj.syncWithController\n";
 
-      (@Sync) = `cat Methods/Protos/$Obj.syncWithController`;
+      (@Sync) = `cat Protos/$Obj.syncWithController`;
 
       foreach $syncLine (@Sync){
          push(@Meths, $syncLine);
@@ -82,7 +82,7 @@ foreach $Obj (@Objs){
       $Line =~ s/^\s+//;
       $Line =~ s/\s+$//;
 
-      $Proto = "Methods/Protos/$Line";
+      $Proto = "Protos/$Line";
 
       @protoFile = ();
       if(-e $Proto){
