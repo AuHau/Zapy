@@ -1,0 +1,51 @@
+#!/usr/bin/python
+
+import sys
+import zaUser
+import json
+
+#
+# Keys and Url
+#
+#zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
+#zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
+zapyKey = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
+zapyUrl = "https://64.191.192.72/zaccess/raadmin/webapi/doApi"
+
+#
+# Instantiate a Default App Profile
+#
+print "Create a New App Profile Object with Class Defaults"
+zu = zaUser.zaUser()
+zu.loadCfg('cfgZaUser.json')
+
+#
+# Attach the API Keys and URL
+#
+zu.loadKeys(zapyKey, zapyUrl)
+
+#
+# Test syncWithController
+#
+zu.syncWithController()
+zu.inspect()
+zu.saveCfg('defZaUser.json')
+
+#
+# Test List Users - Before
+#
+print zu.ZaUser_list()
+print
+
+#
+# Test Delete User
+#
+raw_input('Ready to Delete User? ')
+zu.ZaUser_delete()
+print
+#
+# Test List Users - After
+#
+print zu.ZaUser_list()
+print
+

@@ -1,0 +1,5 @@
+{
+   "poolTag":     "LesCloudServerPool1",
+   "description": "This Description",
+   "os":          "linux"
+}

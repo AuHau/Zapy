@@ -1,0 +1,9 @@
+{
+   "appProfileName": "LesProfileOne",
+   "appProfileId":   null,
+   "description":    "This Description",
+   "coipAssignment": "dynamic",
+   "coipLanPort":    null,
+   "enableSSL":      null,
+   "cloudProjectId": null
+}

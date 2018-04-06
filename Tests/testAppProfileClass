@@ -1,0 +1,56 @@
+#!/usr/bin/python
+
+import sys
+import AppProfile
+import json
+
+#
+# Keys and Url
+#
+zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
+zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
+
+#
+# Instantiate a Default App Profile
+#
+print "Create a New App Profile Object with Class Defaults"
+ap = AppProfile.AppProfile()
+
+#
+# Attach the API Keys and URL
+#
+ap.loadKeys(zapiKey, zapyUrl)
+
+#
+# Load a Configuration, Sync it to the zCenter, Save the Actual Configuration
+#
+ap.loadCfg("LesProfileOneCfg.json")
+ap.syncWithController()
+ap.saveCfg("LesProfileOneDef.json")
+ap.inspect()
+
+#
+# Set a Class Attribute
+#
+print "Set Test"
+ap.set("description", "This Description Right Here")
+ap.inspect()
+
+#
+# Get a Class Attribute
+#
+print "Get Test"
+print '   {:<20} = {:<20}\n'.format("description", ap.get("description"))
+
+#
+# Testing Member Functions
+#
+# print "Call a Member Function"
+# ap.AppProfile_listInlineDeviceGroups()
+# print
+#
+
+raw_input("Ready to Delete? ")
+
+ap.AppProfile_delete()
+ap.inspect()

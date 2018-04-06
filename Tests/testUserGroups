@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+import sys
+import zaUserGroup
+import json
+
+#
+# Keys and Url
+#
+#zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
+#zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
+zapyKey = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
+zapyUrl = "https://64.191.192.72/zaccess/raadmin/webapi/doApi"
+
+#
+# Instantiate a Default User Group
+#
+print "Create a New User Group Object with Class Defaults"
+ug = zaUserGroup.zaUserGroup()
+ug.loadCfg('cfgZaUserGroup.json')
+
+#
+# Attach the API Keys and URL
+#
+ug.loadKeys(zapyKey, zapyUrl)
+
+#
+# Test syncWithController
+#
+ug.syncWithController()
+ug.inspect()
+ug.saveCfg('defZaUserGroup.json')
+
+#
+# Test List User Groups - Before
+#
+print ug.ZaUserGroup_list()
+print
+print ug.ZaUserGroup_listUsers()
+print
+
+#
+# Test Add User
+#
+ug.ZaUserGroup_addUser("lesds")
+print
+print ug.ZaUserGroup_listUsers()
+print
+
+raw_input('Ready to Remove User from User Group? ')
+
+ug.ZaUserGroup_removeUser("lesds")
+print
+print ug.ZaUserGroup_listUsers()
+print
+
+#
+# Test Delete User Group
+#
+raw_input('Ready to Delete User Group? ')
+ug.ZaUserGroup_delete()
+print
+#
+# Test List Users - After
+#
+print ug.ZaUserGroup_listUsers()
+print
+

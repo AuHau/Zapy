@@ -1,0 +1,15 @@
+{
+   "appProfileName": "LesProfileOne",
+   "appProfileId":   null,
+   "coipWanId":      null,
+   "coipWanName":    null,
+   "components": {
+      "to":   null, 
+      "from": null
+   },
+   "protocol": {
+      "tcp":  "22,3306",
+      "udp":  null,
+      "icmp": true
+   }
+}

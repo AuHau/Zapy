@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+import cloudServerPool
+
+#
+# Instantiate a Default Cloud Domain
+#
+print "Class Defaults"
+sp = cloudServerPool.cloudServerPool()
+sp.inspect()
+
+#
+# Load it with a JSON Config File
+#
+print "Load a Configuration"
+sp.loadCfg("cfgCloudServerPool.json")
+sp.inspect()
+
+#
+# Testing Set Class Attributes
+#
+print "Set Test"
+sp.set("cloudServerPoolName", "Toad")
+sp.inspect()
+
+#
+# Save it to a JSON Config File
+#
+print "Save the Configuration"
+sp.saveCfg("defCloudServerPool.json")
+sp.inspect()
+
+#
+# Testing Get Class Attributes
+#
+print "Get Test"
+print '   {:<20} = {:<20}'.format("poolTag", sp.get("poolTag"))
+print
+
+#
+# Testing Member Functions
+#
+print "Call a Member Function"
+sp.CloudServerPool_delete()
+print

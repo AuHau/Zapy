@@ -1,0 +1,61 @@
+#!/usr/bin/python
+
+import sys
+import fabricServerPool
+
+#
+# Keys and Url
+#
+zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
+zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
+
+#
+# Instantiate a Default Fabric Server Domain
+#
+print "Class Defaults"
+fp = fabricServerPool.fabricServerPool()
+fp.inspect()
+
+#
+# Load it with a JSON Config File
+#
+print "Load a Configuration"
+fp.loadCfg("cfgFabricServerPool.json")
+fp.inspect()
+
+fp.loadKeys(zapiKey, zapyUrl)
+
+myUrl = fp.FabricServerPool_getZlinkDownloadUrl()['data']['downloadUrl']
+
+print "curl -o install_zlink.tar.gz '", myUrl, "'"
+print
+
+sys.exit()
+
+#
+# Testing Set Class Attributes
+#
+print "Set Test"
+sp.set("cloudServerPoolName", "Toad")
+sp.inspect()
+
+#
+# Save it to a JSON Config File
+#
+print "Save the Configuration"
+sp.saveCfg("defCloudServerPool.json")
+sp.inspect()
+
+#
+# Testing Get Class Attributes
+#
+print "Get Test"
+print '   {:<20} = {:<20}'.format("poolTag", sp.get("poolTag"))
+print
+
+#
+# Testing Member Functions
+#
+print "Call a Member Function"
+sp.CloudServerPool_delete()
+print

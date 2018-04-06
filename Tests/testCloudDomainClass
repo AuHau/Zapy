@@ -1,0 +1,40 @@
+#!/usr/bin/python
+
+import sys
+import cloudDomain
+import json
+
+#
+# Keys and Url
+#
+zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
+zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
+
+#
+# Instantiate a Default App Profile
+#
+print
+print "Create a New Cloud Domain Object with Class Defaults"
+cd = cloudDomain.cloudDomain()
+
+#
+# Attach the API Keys and URL
+#
+cd.loadKeys(zapiKey, zapyUrl)
+
+#
+# Test the Customer Functions
+#
+cd.loadCfg("cfgCloudDomain.json")
+cd.inspect()
+cd.syncWithController()
+cd.inspect()
+cd.saveCfg("defCloudDomain.json")
+
+#
+# Delete
+#
+raw_input("Ready to Delete? ")
+
+cd.CloudDomain_delete()
+cd.inspect()

@@ -1,0 +1,6 @@
+{
+   "groupName":      "myUserGroup",
+   "description":    "This one right here",
+   "clientCheck":    null,
+   "whiteListedIps": null
+}

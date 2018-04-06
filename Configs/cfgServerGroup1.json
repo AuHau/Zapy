@@ -1,0 +1,10 @@
+{
+   "serverGroupId":	null,
+   "serverGroupName":	"Sg1",
+   "poolTag":		"LesCloudServerPool1",
+   "description":	null,
+   "siloMode":		true,
+   "coipSubnet":	{"from": "172.33.0.1", "to": "172.33.0.5"},
+   "failClose":		null,
+   "cloudDomainId":	null
+}

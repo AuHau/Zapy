@@ -1,0 +1,12 @@
+{
+   "appProfileName": "LesProfileOne",
+   "appProfileId":   null,
+   "coipLanId":      null,
+   "coipLanName":    "LesCoipLan",
+   "components":     null,
+   "protocol": {
+      "tcp":  "22,3306",
+      "udp":  null,
+      "icmp": true
+   }
+}
