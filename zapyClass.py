@@ -46,6 +46,9 @@ class zapyClass(object):
    #
    # Disable InsecureRequestWarning
    #
+   # Note: This requires more work to add Cert Verification to the System
+   # See:  https://urllib3.readthedocs.io/en/latest/user-guide.html#ssl
+   #
    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
    def __init__(self):
