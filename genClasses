@@ -17,40 +17,46 @@
 #
 # This software is for demonstrations purposes only and is not supported by Zentera Systems, Inc.
 
-
-push(@Objs, 'AppProfile');
-push(@Objs, 'CloudDomain');
-push(@Objs, 'CloudServerPool');
-push(@Objs, 'CoipLan');
-push(@Objs, 'CoipWan');
-push(@Objs, 'EndServer');
-push(@Objs, 'FabricServerPool');
-push(@Objs, 'InlineDeviceGroup');
-push(@Objs, 'ServerGroup');
-push(@Objs, 'ZaUser');
-push(@Objs, 'ZaUserGroup');
-
+#
+# List of Object Classes to Generate
+#
+# Each one listed here needs a matching Attribs, Methods, and optionally a Protos file
+#
+push(@classObjs, 'AppProfile');
+push(@classObjs, 'CloudDomain');
+push(@classObjs, 'CloudServerPool');
+push(@classObjs, 'CoipLan');
+push(@classObjs, 'CoipWan');
+push(@classObjs, 'EndServer');
+push(@classObjs, 'FabricServerPool');
+push(@classObjs, 'InlineDeviceGroup');
+push(@classObjs, 'ServerGroup');
+push(@classObjs, 'ZaUser');
+push(@classObjs, 'ZaUserGroup');
 
 print "\n";
 
-foreach $Obj (@Objs){
-   print "Generating $Obj Class Information\n";
+#
+# Outer Loop of Class Objects
+#
+foreach $classObj (@classObjs){
+   print "Generating $classObj Class Information\n";
    
    $Hashes = "#" x 101;
 
    #
    # Generate Attributes
    #
-   print "   Generating $Obj Attributes\n";
-   @File  = ();
+   print "   Generating $classObj Attributes\n";
+   @attribFile  = ();
    @Attrs = ();
    @Vars  = ();
-   (@File) = `cat Attribs/attribs.$Obj`;
-   chop(@File);
+   (@attribFile) = `cat Attribs/attribs.$classObj`;
+   chop(@attribFile);
 
-   push(@Attrs, "          $Obj Class Attributes:\n");
+   push(@Attrs, "          $classObj Class Attributes:\n");
 
-   foreach $Line (@File){
+   foreach $Line (@attribFile){
       ($key, $val) = split(/,\s+/, $Line);
 
       push(@Meths, sprintf "             %-20s\n", $key);
@@ -67,17 +73,21 @@ foreach $Obj (@Objs){
    #
    # Generate Methods
    #
-   print "   Generating $Obj Methods\n";
-   @File  = ();
+   print "   Generating $classObj Methods\n";
+   @methFile  = ();
    @Meths = ();
-   (@File) = `cat Methods/methods.$Obj`;
+   (@methFile) = `cat Methods/methods.$classObj`;
+   chop(@methFile);
 
-   $syncFile = "Protos/$Obj.syncWithController";
+   $syncFile = "Protos/$classObj.syncWithController";
 
+   #
+   # Handle the syncWithController method first
+   #
    if(-e $syncFile){
-      print "      Using Prototype Protos/$Obj.syncWithController\n";
+      print "      Using Prototype Protos/$classObj.syncWithController\n";
 
-      (@Sync) = `cat Protos/$Obj.syncWithController`;
+      (@Sync) = `cat Protos/$classObj.syncWithController`;
 
       foreach $syncLine (@Sync){
          push(@Meths, $syncLine);
@@ -87,11 +97,18 @@ foreach $Obj (@Objs){
       push(@Meths, "   $Hashes\n\n");
    }
 
-   chop(@File);
-
-   foreach $Line (@File){
+   foreach $Line (@methFile){
       #
-      # If a Prototype exists for this Method use it
+      # Creates the Method
+      #    If a Prototype exists for this Method use it
+      #    Else generate a default "ToDo" method
+      #
+      # Note: The indentation of the Protos files is critical. Currently, the Protos
+      #       all have the proper (3 space) leading indentation because they are
+      #       subordinate to the zero indent of the basClass file.
+      #
+      #       Ideally, this generator should not care about what's in the file, but
+      #       should generate the proper indent
       #
       $Line =~ s/^\s+//;
       $Line =~ s/\s+$//;
@@ -112,7 +129,7 @@ foreach $Obj (@Objs){
       }
       else{
 	 #
-	 # Generate the Default Method
+	 # Generate a Default ToDo Method
 	 #
 	 ($class, $func) = split(/\./, $Line);
 
@@ -133,16 +150,16 @@ foreach $Obj (@Objs){
    }
 
    #
-   # Generate Class
+   # Generate the Class
    #
-   print "   Generating $Obj Class\n";
-   @File = ();
-   (@File) = `cat baseTemplate.py`;
+   print "   Generating $classObj Class\n";
+   @classFile = ();
+   (@classFile) = `cat baseTemplate.py`;
 
-   open($Fot, ">$Obj.py");
-      foreach $Line (@File){
+   open($Fot, ">$classObj.py");
+      foreach $Line (@classFile){
 	 if ($Line =~ /---CLASS---/){
-	    $Line =~ s/---CLASS---/$Obj/;
+	    $Line =~ s/---CLASS---/$classObj/;
 	    print $Fot $Line;
 	    next;
 	 }
@@ -172,5 +189,5 @@ foreach $Obj (@Objs){
       }
    close($Fot);
 
-   print "$Obj Class Generation Complete\n\n";
+   print "$classObj Class Generation Complete\n\n";
 }
