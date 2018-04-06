@@ -1,0 +1,16 @@
+   def CloudServerPool_getZlinkDownloadUrl(self):
+      """
+	 Gets zLink download URL for the Cloud Server Pool
+      """
+
+      req = {
+	 'cmd':'$CloudServerPool.getZlinkDownloadUrl',
+	 'args':{
+	    'poolTag': self._cfg['poolTag'],
+	    'os': self._cfg['os']
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return(info['data']['downloadUrl'])

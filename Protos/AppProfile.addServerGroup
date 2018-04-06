@@ -1,0 +1,20 @@
+   def AppProfile_addServerGroup(self, sg):
+      """
+	 Zapi Call to add a Server Group to an Application Profile
+
+	 Wut
+      """
+
+      cmd = {
+	 'cmd':'$AppProfile.addServerGroup',
+	 'args':{
+	    'appProfileId': self._cfg['appProfileId'],
+	    'poolTag': sg.get('poolTag'),
+	    'serverGroupName': sg.get('serverGroupName'),
+	    'coipSubnet': sg.get('coipSubnet')
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return(info)

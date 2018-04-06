@@ -1,0 +1,16 @@
+   def CoipWan_delete(self):
+      """
+         Zapi Call to CoipWan.delete
+      """
+
+      info = None
+
+      if self._cfg['coipWanId'] != None:
+	 cmd = {
+	    "cmd":"$CoipWan.delete",
+	    "args": { "coipWanId": self._cfg['coipWanId'] }
+	 }
+
+	 info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

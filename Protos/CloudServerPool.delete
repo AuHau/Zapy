@@ -1,0 +1,15 @@
+   def CloudServerPool_delete(self):
+      """
+	 Delete a CloudServerPool
+      """
+
+      cmd = {
+	 'cmd':'$CloudServerPool.delete',
+	 'args':{
+	    'poolTag': self._cfg['poolTag']
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+      
+      return info

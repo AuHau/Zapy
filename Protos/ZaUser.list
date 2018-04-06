@@ -1,0 +1,17 @@
+   def ZaUser_list(self):
+      """
+         Zapi Call to $ZaUser.list
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaUser.list",
+         "args": {
+	    "status": "all"
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

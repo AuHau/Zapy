@@ -1,0 +1,22 @@
+   def ZaUser_create(self):
+      """
+         Zapi Call to $ZaUser.create
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaUser.create",
+         "args": {
+	    "account": self._cfg["account"],
+	    "userType": self._cfg["userType"],
+	    "password": self._cfg["password"],
+	    "firstName": self._cfg["firstName"],
+	    "lastName": self._cfg["lastName"],
+	    "email": self._cfg["email"]
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

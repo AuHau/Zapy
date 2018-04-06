@@ -1,0 +1,15 @@
+   def ZaUserGroup_listUsers(self):
+      """
+         Zapi Call to $ZaUserGroup.listUsers
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaUserGroup.listUsers",
+         "args":self._cfg
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info
