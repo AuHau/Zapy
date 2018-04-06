@@ -1,0 +1,162 @@
+#!/usr/bin/perl
+
+#
+# Zapy Class Generator
+#
+
+push(@Objs, 'AppProfile');
+push(@Objs, 'CloudDomain');
+push(@Objs, 'CloudServerPool');
+push(@Objs, 'CoipLan');
+push(@Objs, 'CoipWan');
+push(@Objs, 'EndServer');
+push(@Objs, 'FabricServerPool');
+push(@Objs, 'InlineDeviceGroup');
+push(@Objs, 'ServerGroup');
+push(@Objs, 'ZaUser');
+push(@Objs, 'ZaUserGroup');
+
+
+print "\n";
+
+foreach $Obj (@Objs){
+   print "Generating $Obj Class Information\n";
+   
+   $Hashes = "#" x 101;
+
+   #
+   # Generate Attributes
+   #
+   print "   Generating $Obj Attributes\n";
+   @File  = ();
+   @Attrs = ();
+   @Vars  = ();
+   (@File) = `cat Attribs/attribs.$Obj`;
+   chop(@File);
+
+   push(@Attrs, "          $Obj Class Attributes:\n");
+
+   foreach $Line (@File){
+      ($key, $val) = split(/,\s+/, $Line);
+
+      push(@Meths, sprintf "             %-20s\n", $key);
+
+      $Line =~ s/^/      "/;
+      $Line =~ s/,/": /;
+      $Line =~ s/$/,/;
+
+      # print "   >>> $Line\n";
+
+      push(@Vars,  "$Line\n");
+   }
+
+   #
+   # Generate Methods
+   #
+   print "   Generating $Obj Methods\n";
+   @File  = ();
+   @Meths = ();
+   (@File) = `cat Methods/methods.$Obj`;
+
+   $syncFile = "Methods/Protos/$Obj.syncWithController";
+
+   if(-e $syncFile){
+      print "      Using Prototype Methods/Protos/$Obj.syncWithController\n";
+
+      (@Sync) = `cat Methods/Protos/$Obj.syncWithController`;
+
+      foreach $syncLine (@Sync){
+         push(@Meths, $syncLine);
+      }
+
+      push(@Meths, "\n");
+      push(@Meths, "   $Hashes\n\n");
+   }
+
+   chop(@File);
+
+   foreach $Line (@File){
+      #
+      # If a Prototype exists for this Method use it
+      #
+      $Line =~ s/^\s+//;
+      $Line =~ s/\s+$//;
+
+      $Proto = "Methods/Protos/$Line";
+
+      @protoFile = ();
+      if(-e $Proto){
+         print "      Using Prototype $Proto\n";
+	 (@protoFile) = `cat $Proto`;
+
+	 foreach $protoLine (@protoFile){
+	    push(@Meths, $protoLine);
+	 }
+
+	 push(@Meths, "\n");
+	 push(@Meths, "   $Hashes\n\n");
+      }
+      else{
+	 #
+	 # Generate the Default Method
+	 #
+	 ($class, $func) = split(/\./, $Line);
+
+	 push(@Meths, sprintf "   def %s_%s(self):\n", $class, $func);
+	 push(@Meths, sprintf "      \"\"\"\n");
+	 push(@Meths, sprintf "         ToDo: Zapi Call to $Line\n"); 	
+	 push(@Meths, sprintf "      \"\"\"\n"); 				
+	 push(@Meths, sprintf "\n"); 					
+	 push(@Meths, sprintf "      info = None\n\n"); 			
+	 push(@Meths, sprintf "      cmd = \{\n"); 			
+	 push(@Meths, sprintf "         \"cmd\":\"\$%s_%s\",\n", $class, $func);
+	 push(@Meths, sprintf "         \"args\":self._cfg\n");		
+	 push(@Meths, sprintf "      \}\n\n"); 				
+	 push(@Meths, sprintf "      info = self.makeZapyRequest(json.dumps(cmd))\n\n");
+	 push(@Meths, sprintf "      return info\n\n");			
+	 push(@Meths, sprintf "   $Hashes\n\n");				
+      }
+   }
+
+   #
+   # Generate Class
+   #
+   print "   Generating $Obj Class\n";
+   @File = ();
+   (@File) = `cat baseTemplate.py`;
+
+   open($Fot, ">$Obj.py");
+      foreach $Line (@File){
+	 if ($Line =~ /---CLASS---/){
+	    $Line =~ s/---CLASS---/$Obj/;
+	    print $Fot $Line;
+	    next;
+	 }
+
+	 if ($Line =~ /---VARS---/){
+	    foreach $Var (@Vars){
+	       print $Fot $Var;
+	    }
+	    next;
+	 }
+
+	 if ($Line =~ /---ATTRIB---/){
+	    foreach $Attr (@Attrs){
+	       print $Fot $Attr;
+	    }
+	    next;
+	 }
+
+	 if($Line =~ /---METHODS---/){
+	    foreach $Meth (@Meths){
+	       print $Fot $Meth;
+	    }
+	    next;
+	 }
+
+	 print $Fot $Line;
+      }
+   close($Fot);
+
+   print "$Obj Class Generation Complete\n\n";
+}

@@ -1,0 +1,19 @@
+{
+   "endServerId":  null,
+   "phySubnetMap": {
+      "phySubnet": [
+	 {
+	    "from": null,
+	    "to":   null
+	 }
+      ]
+   },
+   "phySubnet":     null,
+   "coipFwdSubnet": null,
+   "phyFwdSubnet": [
+      {
+	 "from": null,
+	 "to":   null
+      }
+   ]
+}

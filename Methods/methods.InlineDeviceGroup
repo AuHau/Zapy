@@ -1,0 +1,5 @@
+InlineDeviceGroup.autoAddEndServers
+InlineDeviceGroup.delete
+InlineDeviceGroup.listEndServers
+InlineDeviceGroup.manualAddEndServers
+InlineDeviceGroup.removeEndServers

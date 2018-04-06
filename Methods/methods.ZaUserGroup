@@ -1,0 +1,6 @@
+ZaUserGroup.addUser
+ZaUserGroup.create
+ZaUserGroup.delete
+ZaUserGroup.list
+ZaUserGroup.listUsers
+ZaUserGroup.removeUser

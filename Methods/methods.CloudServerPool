@@ -1,0 +1,4 @@
+CloudServerPool.create
+CloudServerPool.delete 
+CloudServerPool.getZlinkDownloadUrl
+CloudServerPool.listEndServers

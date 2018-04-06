@@ -1,0 +1,17 @@
+   def syncWithController(self):
+      """
+         If the Cloud Domain described by the config file exists, synchronize the data structure to the controller
+	 If it doesn't exist, create it.
+      """
+
+      info = self.listCloudDomainByName(self._cfg['cloudDomainName'])
+
+      if info != None:
+	 print "Found >", self._cfg['cloudDomainName']
+	 for key, val in info.items():
+	    self._cfg[key] = val
+      else:
+         print "Creating New Cloud Domain"
+	 info = self.CloudDomain_create()
+
+	 self._cfg['cloudDomainId'] = info['data']['cloudDomainId']

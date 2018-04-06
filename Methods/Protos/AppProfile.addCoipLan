@@ -1,0 +1,23 @@
+   def AppProfile_addCoipLan(self):
+      """
+         Zapi Call to AppProfile.addCoipLan
+      """
+
+      cmd = {
+         "cmd":"$AppProfile.addCoipLan",
+	 "args": {
+	    'appProfileId': self._cfg['appProfileId'],
+	    'coipLanName': self._cfg['lName'],
+	    'components':{
+	       'from': self._cfg['frId,'],
+	       'to': self._cfg['toId'],
+	    },
+	    "protocol": {
+	       self._cfg['protocol']
+	    }
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

@@ -1,0 +1,14 @@
+AppProfile.activate
+AppProfile.addCoipLan
+AppProfile.addCoipWanTypeOne
+AppProfile.addCoipWanTypeThree
+AppProfile.addCoipWanTypeTwo
+AppProfile.addInlineDeviceGroup
+AppProfile.addServerGroup
+AppProfile.create
+AppProfile.deactivate
+AppProfile.delete
+AppProfile.listCoipWans
+AppProfile.listInlineDeviceGroups
+AppProfile.listServerGroups
+AppProfile.listServerGroupByName

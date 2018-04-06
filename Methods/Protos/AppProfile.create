@@ -1,0 +1,12 @@
+   def AppProfile_create(self):
+      """
+         Zapi Call to AppProfile.create
+      """
+      cmd = {
+         "cmd":"$AppProfile.create",
+	 "args": self._cfg
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

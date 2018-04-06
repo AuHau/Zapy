@@ -1,0 +1,18 @@
+   def ZaUserGroup_addUser(self, account):
+      """
+         Zapi Call to $ZaUserGroup.addUser
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaUserGroup.addUser",
+         "args": {
+	    "groupName": self._cfg["groupName"],
+	    "account": account
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

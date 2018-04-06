@@ -1,0 +1,10 @@
+account,		None
+userType,		None
+status,			None
+firstName,		None
+lastName,		None
+email,			None
+expirationDate,		None
+forceChPwdNextLogin,	None
+signonSecurityMac,	None
+signonSecurityHostname,	None

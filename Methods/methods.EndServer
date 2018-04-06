@@ -1,0 +1,12 @@
+EndServer.addInlinePolicy
+EndServer.deleteInlinePolicy
+EndServer.getDetails
+EndServer.getZlinkHostFileDownloadUrl
+EndServer.getZlinkLogDownloadUrl
+EndServer.getDisconnectedInlineDevices
+EndServer.listInlinePolicies
+EndServer.queryRegistrationStatus
+EndServer.register
+EndServer.unregister
+EndServer.upgradeZlink
+ZaServer.list

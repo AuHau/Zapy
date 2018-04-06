@@ -1,0 +1,8 @@
+ServerGroup.addInlinePolicy
+ServerGroup.autoAddEndServers
+ServerGroup.configureFailClose
+ServerGroup.deleteInlinePolicy
+ServerGroup.manualAddEndServers
+ServerGroup.listEndServers
+ServerGroup.listInlinePolicies
+ServerGroup.removeEndServers

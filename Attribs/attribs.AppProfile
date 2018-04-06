@@ -1,0 +1,8 @@
+appProfileName, None
+appProfileId,   None
+description,    None
+coipAssignment, "dynamic"
+coipLanPort,    None
+enableSSL,      False
+cloudProjectId, None
+cfgFileName,    None

@@ -1,0 +1,4 @@
+CloudDomain.create
+CloudDomain.delete
+CloudDomain.listCloudServerPools
+CloudDomain.listFabricServerPools

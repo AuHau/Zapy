@@ -1,0 +1,8 @@
+serverGroupId,		None
+serverGroupName,	None
+poolTag,		None
+description,		None
+siloMode,		None
+coipSubnet,		None
+failClose,		None
+cloudDomainId,		None

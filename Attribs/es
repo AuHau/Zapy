@@ -1,0 +1,14 @@
+endServerId,		None
+hostname,		None
+privateIp,		None
+publicIp,		None
+osVersion,		None
+coipAddress,		None
+onlineSince,		None
+zlinkVersion,		None
+appProfileId,		None
+serverGroupId,		None
+inlineDeviceGroupId,	None
+cidr,			None
+poolTag,		None
+serverType,		None
