@@ -32,6 +32,9 @@ class ---CLASS---(zapyClass):
 
    _Debug = True
 
+   _className = "---CLASSNAME---"
+   _classId   = "---CLASSID---"
+
    def __init__(self):
       """
 	 Class Initialization
@@ -46,6 +49,12 @@ class ---CLASS---(zapyClass):
 	 # print("The value of {} is {}".format(key, value))
 
 	 # self._cfg[key] = value
+
+   def getName(self):
+      return self._className
+
+   def getId(self):
+      return self._classId
 
    ####################################################################################################
    #

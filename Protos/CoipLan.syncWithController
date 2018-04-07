@@ -2,8 +2,8 @@
       """
          If the CoipLan described by the config file exists, synchronize the data structure to the controller
 	 If it doesn't exist, create it.
-
-	 Caveat: There doesn't appear to be an "AppProfile.listCoipLan" function in the API
+	 
+	 Caveat: There isn't an "AppProfile.listCoipLan" function in the API
 
 	 Thus this route will simply try to create the CoipLan and will return 'CoipLanAlreadyExists'
       """
@@ -12,14 +12,39 @@
       
       self._cfg['appProfileId'] = ap.get('appProfileId')
 
+      #
+      # ToDo: - When IP Components are Added, this will require some additional logic before we ask for an Id
+      #
+      # CoipWan will require similar, but more complex logic so go work on that next
+      #
+      # Allowed CoIPLan Connections Component Id Keys::
+      #    ServerGroup -> 'serverGroupId'
+      #    IPComponent -> <Undefined>Id
+      #
+
+      cp1Id = cp1.getId()
+      cp2Id = cp2.getId()
+
+      if cp1Id is "serverGroupId":
+         cp1Comp = cp1.get('serverGroupId')
+      else:
+         # cp1Comp = cp1.get('<Undefined>')	# ToDo: Complete Code Here
+	 pass
+
+      if cp2Id is "serverGroupId":
+         cp2Comp = cp2.get('serverGroupId')
+      else:
+         # cp2Comp = cp2.get('<Undefined>')	# ToDo: Complete Code Here
+	 pass
+
       cmd = {
          "cmd":"$AppProfile.addCoipLan",
 	 "args":{
 	    "appProfileId": self._cfg['appProfileId'],
 	    "coipLanName": self._cfg['coipLanName'],
 	    "components":{
-	       "from": cp1,
-	       "to": cp2
+	       "from": cp1Comp,
+	       "to":   cp2Comp
 	    },
 	    "protocol": self._cfg['protocol']
 	 }
@@ -31,7 +56,7 @@
       # print info
       # print "--------->"
 
-      if len(info['status']) == 'Ok':
+      if 'Ok' in info['status']:
          self._cfg['coipLanId'] = info['data']['coipLanId']
 
       return info

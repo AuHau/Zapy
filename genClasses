@@ -44,6 +44,9 @@ foreach $classObj (@classObjs){
    
    $Hashes = "#" x 101;
 
+   $className = lcfirst("${classObj}Name");
+   $classId   = lcfirst("${classObj}Id");
+
    #
    # Generate Attributes
    #
@@ -169,6 +172,14 @@ foreach $classObj (@classObjs){
 	       print $Fot $Var;
 	    }
 	    next;
+	 }
+
+	 if ($Line =~ /---CLASSNAME---/){
+	    $Line =~ s/---CLASSNAME---/$className/;
+	 }
+
+	 if ($Line =~ /---CLASSID---/){
+	    $Line =~ s/---CLASSID---/$classId/;
 	 }
 
 	 if ($Line =~ /---ATTRIB---/){

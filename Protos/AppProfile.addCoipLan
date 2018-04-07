@@ -20,4 +20,6 @@
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
+      print info
+
       return info
