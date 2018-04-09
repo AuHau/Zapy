@@ -32,6 +32,10 @@ class ---CLASS---(zapyClass):
 
    _Debug = True
 
+   #
+   # Used to Retrieve the Attribute Name and Id for a Derived Class
+   #
+
    _className = "---CLASSNAME---"
    _classId   = "---CLASSID---"
 

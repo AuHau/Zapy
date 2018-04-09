@@ -6,6 +6,8 @@
 	 Caveat: There isn't an "AppProfile.listCoipLan" function in the API
 
 	 Thus this route will simply try to create the CoipLan and will return 'CoipLanAlreadyExists'
+
+	 ToDo: InLineDevices
       """
 
       print "Adding a New CoipLan to", ap.get('appProfileName')
@@ -14,8 +16,6 @@
 
       #
       # ToDo: - When IP Components are Added, this will require some additional logic before we ask for an Id
-      #
-      # CoipWan will require similar, but more complex logic so go work on that next
       #
       # Allowed CoIPLan Connections Component Id Keys::
       #    ServerGroup -> 'serverGroupId'
