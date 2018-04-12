@@ -13,7 +13,7 @@
    or otherwise) arising in any way out of the use of this software, even if advised of the 
    possibility of such damage.
 
-   This software is for demonstrations purposes only and is not supported by Zentera Systems, Inc.
+   This software is for demonstration purposes only and is not supported by Zentera Systems, Inc.
 
 """
 

@@ -1,1 +1,1 @@
-{"clientCheck": null, "groupName": "myUserGroup", "cfgFileName": "cfgZaUserGroup.json", "whiteListedIps": null, "description": "This one right here"}
+{"clientCheck": null, "groupName": "myUserGroup", "cfgFileName": "Configs/cfgZaUserGroup.json", "whiteListedIps": null, "description": "This one right here"}
