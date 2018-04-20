@@ -1,4 +1,4 @@
 poolTag,		None
 description,		None
-fabricServerType,	None
-os,			None
+fabricServerType,	"edgeGateway"
+os,			"linux"

@@ -1,35 +1,35 @@
 #!/usr/bin/python
 
 import sys
-import zaUserGroup
+import ZaUserGroup
 import json
 
 #
 # Keys and Url
 #
-#zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
+#zapyKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
 #zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
-zapyKey = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
-zapyUrl = "https://64.191.192.72/zaccess/raadmin/webapi/doApi"
+#zapyKey = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
+#zapyUrl = "https://64.191.192.72/zaccess/raadmin/webapi/doApi"
+#zapyKey = "/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json"
+
+zapyKey = "/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json"
+zapyUrl = "https://usae.zentera.net/zaccess/raadmin/webapi/doApi"
 
 #
 # Instantiate a Default User Group
 #
 print "Create a New User Group Object with Class Defaults"
-ug = zaUserGroup.zaUserGroup()
-ug.loadCfg('cfgZaUserGroup.json')
-
-#
-# Attach the API Keys and URL
-#
+ug = ZaUserGroup.ZaUserGroup()
 ug.loadKeys(zapyKey, zapyUrl)
+ug.loadCfg('Configs/cfgZaUserGroup.json')
 
 #
 # Test syncWithController
 #
 ug.syncWithController()
 ug.inspect()
-ug.saveCfg('defZaUserGroup.json')
+ug.saveCfg('Configs/defZaUserGroup.json')
 
 #
 # Test List User Groups - Before
