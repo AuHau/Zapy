@@ -1,0 +1,16 @@
+   def CloudDomain_listFabricServerPools(self):
+      """
+         Zapi Call to CloudDomain.listFabricServerPools
+      """
+      cmd = {
+         'cmd':'$CloudDomain.listFabricServerPools',
+	 'args': {
+	    'cloudDomainId': self._cfg['cloudDomainId'],
+	    'fabricServerType': 'inlineStreamingDevice'
+	 }
+      }
+      #self._cfg['fabricServerType']
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

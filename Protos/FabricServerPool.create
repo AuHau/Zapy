@@ -1,0 +1,22 @@
+   def FabricServerPool_create(self, cd, coipSubnet):
+      """
+	 Create a FabricServerPool
+
+	 Requires CloudDomain Object
+      """
+	    
+      self._cfg['cloudDomainId'] = cd.get('cloudDomainId')
+
+      cmd = {
+	 'cmd':'$FabricServerPool.create',
+	 'args':{
+	    'poolTag': self._cfg['poolTag'],
+	    'description': self._cfg['description'],
+	    'fabricServerType': self._cfg['fabricServerType'],
+	    'cloudDomain': self._cfg['cloudDomain']
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+      
+      return info

@@ -1,0 +1,17 @@
+   def AppProfile_listCoipWans(self):
+      """
+         Zapi Call to AppProfile.listCoipWans
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$AppProfile.listCoipWans",
+         "args":{
+	    "appProfileId": self._cfg["appProfileId"]
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

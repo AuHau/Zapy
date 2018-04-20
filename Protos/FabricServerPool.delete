@@ -1,0 +1,15 @@
+   def FabricServerPool_delete(self):
+      """
+	 Delete a FabricServerPool
+      """
+
+      cmd = {
+	 'cmd':'$FabricServerPool.delete',
+	 'args':{
+	    'poolTag': self._cfg['poolTag']
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+      
+      return info

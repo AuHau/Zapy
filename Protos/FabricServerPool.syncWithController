@@ -1,0 +1,46 @@
+   def syncWithController(self, cd):
+      """
+         If the Fabric Server Pool described by the config file exists, synchronize the data structure to the controller
+	 If it doesn't exist, create it.
+      """
+
+      self._cfg['cloudDomainId'] = cd.get('cloudDomainId')
+
+      info = cd.CloudDomain_listFabricServerPools()
+
+      # print ">>>", len(info['data'])
+      # print ">>>", info
+
+      fpExists = False
+
+      if len(info['data']) > 0:
+         for i in range(0, len(info['data'])):
+	    # print ">>>", info['data'][i]['poolTag'], "<->", self._cfg['poolTag']
+	    if info['data'][i]['poolTag'] == self._cfg['poolTag']:
+	       print "Found and Existing Server Group>", self._cfg['poolTag']
+	       for key, val in info['data'][i].items():
+		  # print ">>>", key, "==", val
+		  self._cfg[key] = val
+	       
+	       fpExists = True
+	       break
+
+      if not fpExists:
+	 print "Adding a New Fabric Server Pool to", cd.get('cloudDomainName')
+	 
+	 cmd = {
+	    'cmd':'$FabricServerPool.create',
+	    'args':{
+	       'poolTag': self._cfg['poolTag'],
+	       'description': self._cfg['description'],
+	       'fabricServerType': self._cfg['fabricServerType'],
+	       'cloudDomainId': self._cfg['cloudDomainId']
+	    }
+	 }
+
+
+	 info = self.makeZapyRequest(json.dumps(cmd))
+
+	 return info
+
+      return fpExists

@@ -1,0 +1,12 @@
+   def AppProfile_addCoipWanTypeOne(self):
+      """
+         Zapi Call to AppProfile.addCoipWanTypeOne
+      """
+      cmd = {
+         "cmd":"$AppProfile.addCoipWanTypeOne",
+	 "args": self._cfg
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

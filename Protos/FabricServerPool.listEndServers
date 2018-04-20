@@ -1,0 +1,16 @@
+   def FabricServerPool_listEndServers(self, usable):
+      """
+	 Lists available Fabric Servers in a Server Pool
+      """
+
+      req = {
+	 'cmd':'$FabricServerPool.listEndServers',
+	 'args':{
+	    'poolTag': self._cfg['poolTag'],
+	    'usable': usable
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

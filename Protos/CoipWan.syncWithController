@@ -1,0 +1,151 @@
+   def syncWithController(self, ap, cp1, cp2):
+      """
+         It occurs to me that making the arguments to this routine be "AppProfile, From, To" might simplify this
+	 thing a lot...
+
+         If the CoipWan described by the config file exists, synchronize the data structure to the controller
+	 If it doesn't exist, create it.
+
+	 ToDo: Doesn't Handle coipTypeFour or coipTypeFive yet
+	    4) ClientGroup -> ServerGroup
+	    5) ClientGroup -> Physical Network
+
+	 ToDo: Doesn't Handle multiple ranges for From / To components
+      """
+      
+      self._cfg['appProfileId'] = ap.get('appProfileId')
+
+      #
+      # Check to see if this CoipWan already exists
+      #
+      cwExists = False
+
+      info = ap.AppProfile_listCoipWans()
+
+      if len(info['data']) > 0:
+         for i in range(0, len(info['data'])):
+	    print ">>>", info['data'][i]['coipWanName'], "<->", self._cfg['coipWanName']
+	    if info['data'][i]['coipWanName'] == self._cfg['coipWanName']:
+	       #
+	       # CoipWan Exists
+	       #
+	       print "Found and Existing CoIP Wan>", self._cfg['coipWanName']
+	       for key, val in info['data'][i].items():
+		  # print ">>>", key, "==", val
+		  self._cfg[key] = val
+	       
+	       cwExists = True
+	       break
+
+      if not cwExists:
+	 #
+	 # Determine type and the configuration (Doesn't yet work for typeFour or typeFive)
+	 #
+	 # cp1Id cp2Id    Type
+	 #   SG    SG	  :typeOne
+	 #   SG    EG     :typeTwo
+	 #   EG    SG     :typeTwo
+	 #   EG    EG     :typeThree
+	 #
+	 # Logic: It's a cp1Id XOR cp2Id
+	 #
+	 # cp1Id != cp2Id : typeTwo
+	 # cp1Id == SG    : typeOne
+	 # cp1Id == EG    : typeThree
+	 #
+
+	 cp1Id = cp1.getId()
+	 cp2Id = cp2.getId()
+
+	 if cp1Id is not cp2Id:
+	    self._cfg['coipWanType'] = 'typeTwo'
+	 elif cp1Id is "serverGroupId": 
+	    self._cfg['coipWanType'] = 'typeOne'
+	 else:
+	    self._cfg['coipWanType'] = 'typeThree'
+
+	 print "Adding a New '{}' CoipWan to {}".format(self._cfg['coipWanType'], ap.get('appProfileName'))
+
+	 #
+	 # Prepare Common API Command Bits
+	 #
+
+	 cmd = {
+	    'cmd':'$AppProfile.addCoipWanTypeOne',
+	    'args':{
+	       'appProfileId': self._cfg['appProfileId'],
+	       'coipWanName': self._cfg['coipWanName'],
+	       'direction': self._cfg['direction'],
+	    }
+	 }
+
+	 wanType = self._cfg['coipWanType']
+
+	 if wanType is 'typeOne':
+	    #
+	    # TypeOne
+	    #
+	    cmps = {
+	       'components':{
+		  'from': cp1.get('serverGroupId'),
+		  'to': cp2.get('serverGroupId')
+	       }
+	    }
+
+	 elif wanType is 'typeTwo':
+	    #
+	    # TypeTwo
+	    #
+	    cmps = {
+	       'components':{
+		  'from': cp1.get('serverGroupId'),
+		  'to': cp2.get('serverGroupId')
+	       }
+	    }
+
+	 elif wanType is 'typeThree':
+	    #
+	    # TypeThree
+	    #
+	    cmps = {
+	       'components':{
+		  'from': cp1.get('serverGroupId'),
+		  'to': cp2.get('serverGroupId')
+	       }
+	    }
+
+	 elif wanType is 'typeFour':
+	    #
+	    # TypeFour
+	    #
+	    cmps = {
+	       'components':{
+		  'from': cp1.get('serverGroupId'),
+		  'to': cp2.get('serverGroupId')
+	       }
+	    }
+
+	 elif wanType is 'typeFive':
+	    #
+	    # TypeFive
+	    #
+	    cmps = {
+	       'components':{
+		  'from': cp1.get('serverGroupId'),
+		  'to': cp2.get('serverGroupId')
+	       }
+	    }
+
+	 #
+	 # Make it so
+	 #
+	 cmd['args'].update(cmps)
+
+	 info = self.makeZapyRequest(json.dumps(cmd))
+
+	 if info['status'] == 'Ok':
+	    self._cfg['coipWanId'] = info['data']['coipWanId']
+
+	 return info
+
+      return cwExists
