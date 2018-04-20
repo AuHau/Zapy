@@ -1,0 +1,8 @@
+InlinePolicyId
+policyName
+policyType
+inlineDeviceGroupId
+destinationIps
+direction
+protocol
+cidr
