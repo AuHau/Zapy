@@ -17,7 +17,7 @@
          for i in range(0, len(info['data'])):
 	    # print ">>>", info['data'][i]['poolTag'], "<->", self._cfg['poolTag']
 	    if info['data'][i]['poolTag'] == self._cfg['poolTag']:
-	       print "Found and Existing Server Group>", self._cfg['poolTag']
+	       # print "Found and Existing Server Group>", self._cfg['poolTag']
 	       for key, val in info['data'][i].items():
 		  # print ">>>", key, "==", val
 		  self._cfg[key] = val
@@ -26,7 +26,7 @@
 	       break
 
       if not fpExists:
-	 print "Adding a New Fabric Server Pool to", cd.get('cloudDomainName')
+	 # print "Adding a New Fabric Server Pool to", cd.get('cloudDomainName')
 	 
 	 cmd = {
 	    'cmd':'$FabricServerPool.create',

@@ -10,7 +10,7 @@
 	 ToDo: InLineDevices
       """
 
-      print "Adding a New CoipLan to", ap.get('appProfileName')
+      # print "Adding a New CoipLan to", ap.get('appProfileName')
       
       self._cfg['appProfileId'] = ap.get('appProfileId')
 

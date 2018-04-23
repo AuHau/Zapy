@@ -7,11 +7,11 @@
       info = self.listAppProfileByName(self._cfg['appProfileName'])
 
       if info != None:
-	 print "Found >", self._cfg['appProfileName']
+	 # print "Found >", self._cfg['appProfileName']
 	 for key, val in info.items():
 	    self._cfg[key] = val
       else:
-         print "Creating New App Profile"
+         # print "Creating New App Profile"
 	 info = self.AppProfile_create()
 
 	 self._cfg['appProfileId'] = info['data']['appProfileId']

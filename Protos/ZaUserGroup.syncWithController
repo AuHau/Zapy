@@ -11,11 +11,11 @@
       if info != None:
 	 for i in range(len(info['data'])):
 	    if info['data'][i]['groupName'] == self._cfg['groupName']:
-	       print "Found >", self._cfg['groupName']
+	       # print "Found >", self._cfg['groupName']
 	       userGroupExists = True
 
       if not userGroupExists:
-         print "Creating New ZaUserGroup"
+         # print "Creating New ZaUserGroup"
 	 info = self.ZaUserGroup_create()
 
 	 for key, val in info['data'].items():

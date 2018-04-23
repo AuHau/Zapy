@@ -24,12 +24,12 @@
 
       if len(info['data']) > 0:
          for i in range(0, len(info['data'])):
-	    print ">>>", info['data'][i]['coipWanName'], "<->", self._cfg['coipWanName']
+	    # print ">>>", info['data'][i]['coipWanName'], "<->", self._cfg['coipWanName']
 	    if info['data'][i]['coipWanName'] == self._cfg['coipWanName']:
 	       #
 	       # CoipWan Exists
 	       #
-	       print "Found and Existing CoIP Wan>", self._cfg['coipWanName']
+	       # print "Found and Existing CoIP Wan>", self._cfg['coipWanName']
 	       for key, val in info['data'][i].items():
 		  # print ">>>", key, "==", val
 		  self._cfg[key] = val
@@ -64,7 +64,7 @@
 	 else:
 	    self._cfg['coipWanType'] = 'typeThree'
 
-	 print "Adding a New '{}' CoipWan to {}".format(self._cfg['coipWanType'], ap.get('appProfileName'))
+	 # print "Adding a New '{}' CoipWan to {}".format(self._cfg['coipWanType'], ap.get('appProfileName'))
 
 	 #
 	 # Prepare Common API Command Bits

@@ -42,7 +42,7 @@ class ---CLASS---(zapyClass):
    _className = "---CLASSNAME---"
    _classId   = "---CLASSID---"
 
-   def __init__(self, keyStore):
+   def __init__(self, keyStore, *args):
       """
 	 Class Initialization
 
@@ -56,6 +56,13 @@ class ---CLASS---(zapyClass):
       # Load the API Keys
       #
       self.keyStore = keyStore
+      
+      #
+      # Load a Config File if Passed
+      #
+      if len(args) > 0:
+	 print "   Loading Configuration File:", args[0]
+         self.loadCfg(args[0])
 
       # for key, value in kwargs.items():
 	 # print("The value of {} is {}".format(key, value))

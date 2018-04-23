@@ -7,11 +7,11 @@
       info = self.listCloudDomainByName(self._cfg['cloudDomainName'])
 
       if info != None:
-	 print "Found >", self._cfg['cloudDomainName']
+	 # print "Found >", self._cfg['cloudDomainName']
 	 for key, val in info.items():
 	    self._cfg[key] = val
       else:
-         print "Creating New Cloud Domain"
+         # print "Creating New Cloud Domain"
 	 info = self.CloudDomain_create()
 
 	 self._cfg['cloudDomainId'] = info['data']['cloudDomainId']

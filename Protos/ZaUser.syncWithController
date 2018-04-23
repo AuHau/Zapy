@@ -11,11 +11,11 @@
       if info != None:
 	 for i in range(len(info['data'])):
 	    if info['data'][i]['account'] == self._cfg['account']:
-	       print "Found >", self._cfg['account']
+	       # print "Found >", self._cfg['account']
 	       userExists = True
 
       if not userExists:
-         print "Creating New ZaUser Profile"
+         # print "Creating New ZaUser Profile"
 	 info = self.ZaUser_create()
 
 	 for key, val in info['data'].items():
