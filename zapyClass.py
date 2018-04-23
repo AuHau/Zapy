@@ -51,11 +51,13 @@ class zapyClass(object):
    #
    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-   def __init__(self):
+   def __init__(self, keys):
       """
 	 Class Configuration Attributes
 	    cfgFileName		: File Name of the Loaded Configuration
       """
+
+      self.keyStore = keys
 
       print "zapyClass.__init__()"
 
@@ -121,30 +123,6 @@ class zapyClass(object):
 
    ####################################################################################################
    #
-   # API Keys and API Url
-   #
-   ####################################################################################################
-
-   def loadKeys(self, keyFileName, apiUrl):
-      if self._ZapyDEBUG:
-	 print 'keyFile  == ', keyFileName
-      with open(keyFileName, 'r') as f:
-	 keyStore = json.load(f)
-	 if self._ZapyDEBUG:
-	    # print 'keyStore == ', keyStore
-	    print 'keyStore loaded'
-	 global _ZENTERA_API_SKEY
-	 global _ZENTERA_KID_SKEY
-	 self._ZENTERA_API_SKEY = keyStore['apiSecretKeyBase64']
-	 self._ZENTERA_KID_SKEY = keyStore['apiKeyId']
-
-	 # print "_ZENTERA_API_SKEY = ", _ZENTERA_API_SKEY
-	 # print "_ZENTERA_KID_SKEY = ", _ZENTERA_KID_SKEY
-
-      self._ZapyUrl = apiUrl
-
-   ####################################################################################################
-   #
    # Routines to Hide the Complexity of the API Requests
    #
    ####################################################################################################
@@ -152,7 +130,11 @@ class zapyClass(object):
    def makeZapyRequest(self, command):
       "Craft a zCenter API Request"
 
-      secret  = base64.standard_b64decode(self._ZENTERA_API_SKEY)
+      # print self.keyStore.get('apiSecretKeyBase64')
+      # print self.keyStore.get('apiKeyId')
+      # print self.keyStore.get('apiUrl')
+
+      secret  = base64.standard_b64decode(self.keyStore.get('apiSecretKeyBase64'))
 
       #
       # Calculate the HMAC signature = Base64( HMAC-SHA1( SecretKey, UTF8-Encoding-Of( RequestPayload ) ) )
@@ -163,7 +145,7 @@ class zapyClass(object):
       #
       # Assemble the API Request
       #
-      request = '{"request":' + command + ',"kid":"' + self._ZENTERA_KID_SKEY + '","hmac":"' + hmacKey + '"}'
+      request = '{"request":' + command + ',"kid":"' + self.keyStore.get('apiKeyId') + '","hmac":"' + hmacKey + '"}'
 
       if self._ZapyDEBUG:
 	 print
@@ -176,7 +158,7 @@ class zapyClass(object):
       # Make the API Request and Return the JSON Respons
       #
       headers = {'content-type': 'application/json'}
-      Post = requests.post(self._ZapyUrl, verify=False, data=request, headers=headers)
+      Post = requests.post(self.keyStore.get('apiUrl'), verify=False, data=request, headers=headers)
       info = json.loads(Post.content)
 
       if self._ZapyDEBUG:

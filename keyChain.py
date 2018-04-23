@@ -62,8 +62,8 @@ class keyChain:
 	 if self._ZapyDEBUG:
 	    print 'keyStore loaded'
 
-	 self._cfg['apiKeyId']           = keyStore['apiSecretKeyBase64']
-	 self._cfg['apiSecretKeyBase64'] = keyStore['apiKeyId']
+	 self._cfg['apiKeyId']           = keyStore['apiKeyId']
+	 self._cfg['apiSecretKeyBase64'] = keyStore['apiSecretKeyBase64']
 	 self._cfg['keyFileName']        = keyFileName
 
       #
@@ -79,6 +79,11 @@ class keyChain:
 
    # def __str__(self):
    #    return 'keyChain'
+
+   ####################################################################################################
+
+   def get(self, key):
+      return(self._cfg[key])
 
    ####################################################################################################
 

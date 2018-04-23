@@ -19,7 +19,8 @@
 
 import json
 from zapyClass import zapyClass
-import CloudDomain
+# import CloudDomain
+import keyChain
 
 class ---CLASS---(zapyClass):
 
@@ -30,6 +31,8 @@ class ---CLASS---(zapyClass):
       ---VARS---
    }
 
+   keyStore = []
+
    _Debug = True
 
    #
@@ -39,7 +42,7 @@ class ---CLASS---(zapyClass):
    _className = "---CLASSNAME---"
    _classId   = "---CLASSID---"
 
-   def __init__(self):
+   def __init__(self, keyStore):
       """
 	 Class Initialization
 
@@ -48,6 +51,11 @@ class ---CLASS---(zapyClass):
 	 Class Configuration Attributes
 	    cfgFileName		: File Name of the Loaded Configuration
       """
+
+      #
+      # Load the API Keys
+      #
+      self.keyStore = keyStore
 
       # for key, value in kwargs.items():
 	 # print("The value of {} is {}".format(key, value))
