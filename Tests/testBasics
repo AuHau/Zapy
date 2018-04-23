@@ -1,0 +1,139 @@
+#!/usr/bin/python
+
+"""
+   Example Zapy Usage - Test the Basics of the Zapy Library
+
+   Builds an App Profile for a Hybrid Environment
+
+   Copyright (C) 2012-2018 Zentera Systems, Inc. - All Rights Reserved
+"""
+
+import sys
+import zapyClass
+import AppProfile
+import CloudDomain
+import CloudServerPool
+import ServerGroup
+import CoipLan
+import CoipWan
+import json
+
+#
+# Keys and Url
+#
+# SAP
+# zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
+# zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
+#
+zapiKey = "/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json"
+zapyUrl = "https://usae.zentera.net/zCenter/webapi/doApi"
+
+#
+# Instantiate a Default App Profile
+#
+print "===Create a New App Profile===================================================="
+ap = AppProfile.AppProfile()
+ap.loadKeys(zapiKey, zapyUrl)
+ap.loadCfg("Configs/LesProfileOneCfg.json")
+ap.syncWithController()
+ap.saveCfg("LesProfileOneDef.json")
+ap.inspect()
+
+#
+# Cloud Domains
+#
+print "===Create New Cloud Domain 8==================================================="
+cd8 = CloudDomain.CloudDomain()
+cd8.loadKeys(zapiKey, zapyUrl)
+cd8.loadCfg("Configs/cfgCloudDomain8.json")
+cd8.syncWithController()
+cd8.inspect()
+
+print "===Create New Cloud Domain 9==================================================="
+cd9 = CloudDomain.CloudDomain()
+cd9.loadKeys(zapiKey, zapyUrl)
+cd9.loadCfg("Configs/cfgCloudDomain9.json")
+cd9.syncWithController()
+cd9.inspect()
+
+#
+# Cloud Server Pools
+#
+print "===Create Cloud Server Pool 1=================================================="
+sp1 = CloudServerPool.CloudServerPool()
+sp1.loadKeys(zapiKey, zapyUrl)
+sp1.loadCfg("Configs/cfgCloudServerPool1.json")
+sp1.inspect()
+sp1.syncWithController(cd8)
+sp1.inspect()
+
+print "===Create Cloud Server Pool 2=================================================="
+sp2 = CloudServerPool.CloudServerPool()
+sp2.loadKeys(zapiKey, zapyUrl)
+sp2.loadCfg("Configs/cfgCloudServerPool2.json")
+sp2.inspect()
+sp2.syncWithController(cd9)
+sp2.inspect()
+
+#
+# Server Groups
+#
+print "===Create New Server Group 1==================================================="
+g1 = ServerGroup.ServerGroup()
+g1.loadKeys(zapiKey, zapyUrl)
+g1.loadCfg('Configs/cfgServerGroup1.json')
+g1.syncWithController(ap, cd8, g1)
+g1.inspect()
+
+print "===Create New Server Group 2==================================================="
+g2 = ServerGroup.ServerGroup()
+g2.loadKeys(zapiKey, zapyUrl)
+g2.loadCfg('Configs/cfgServerGroup2.json')
+g2.syncWithController(ap, cd8, g2)
+g2.inspect()
+
+print "===Create New Server Group 3==================================================="
+g3 = ServerGroup.ServerGroup()
+g3.loadKeys(zapiKey, zapyUrl)
+g3.loadCfg('Configs/cfgServerGroup3.json')
+g3.syncWithController(ap, cd9, g3)
+g3.inspect()
+
+#
+# CoIP Lan
+#
+print "===Create CoipLan=============================================================="
+cl = CoipLan.CoipLan()
+cl.loadKeys(zapiKey, zapyUrl)
+cl.loadCfg('Configs/cfgCoipLan.json')
+#l.syncWithController(ap, g1.get('serverGroupId'), g2.get('serverGroupId'))
+cl.syncWithController(ap, g1, g2)
+cl.inspect()
+
+#
+# CoIP Wan
+#
+print "===Create CoipWan=============================================================="
+cw = CoipWan.CoipWan()
+cw.loadKeys(zapiKey, zapyUrl)
+cw.loadCfg('Configs/cfgCoipWanTypeOne.json')
+cw.syncWithController(ap, g1, g3)
+cw.inspect()
+
+raw_input("Ready to Delete? ")
+
+print
+print "   Deleting App Profile"
+ap.AppProfile_delete()
+
+print "   Deleting Cloud Server Pool"
+sp1.CloudServerPool_delete()
+sp2.CloudServerPool_delete()
+
+print "   Deleting Cloud Domains"
+cd8.CloudDomain_delete()
+cd9.CloudDomain_delete()
+
+print
+print "Delete Complete"
+print

@@ -1,0 +1,25 @@
+#!/usr/bin/python
+
+import sys
+import keyChain
+
+key1 = "/home/lesds/.ZapyKeys/c1faf7edeabd4da998f0d195265c7d6c.json.txt"
+key2 = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
+key3 = "/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json"
+
+za = keyChain.keyChain(key1, "go.zentera.net//zcenter")
+print za._cfg['apiSecretKeyBase64']
+
+zb = keyChain.keyChain(key2, "go.zentera.net/zaccess")
+print zb._cfg['apiSecretKeyBase64']
+
+zc = keyChain.keyChain(key3, "go.zentera.net/")
+print zc._cfg['apiSecretKeyBase64']
+
+print za
+print zb
+print zc
+
+za.inspect()
+zb.inspect()
+zc.inspect()

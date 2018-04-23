@@ -19,7 +19,7 @@
 
 import json
 
-class keyChain(object):
+class keyChain:
    """
       
    """
@@ -31,13 +31,6 @@ class keyChain(object):
    _ZapyDEBUG = True
    _ZapyDEBUG = False
 
-   _cfg = {
-      "keyFileName":		None,
-      "apiUrl":			None,
-      "apiKeyId":		None,
-      "apiSecretKeyBase64":	None
-   }
-
    def __init__(self, keyFileName, apiUrl):
       """
 	 Class Configuration Attributes
@@ -47,13 +40,19 @@ class keyChain(object):
 	    apiUrl:		URL of the Target Controller
       """
 
+      self._cfg = {
+	 "keyFileName":		None,
+	 "apiUrl":		None,
+	 "apiKeyId":		None,
+	 "apiSecretKeyBase64":	None
+      }
+
       if self._ZapyDEBUG:
 	 print "keyChain.__init__()"
    
       #
       # Load Keys
       #
-
       if self._ZapyDEBUG:
 	 print 'keyFile  == ', keyFileName
 
@@ -65,10 +64,12 @@ class keyChain(object):
 
 	 self._cfg['apiKeyId']           = keyStore['apiSecretKeyBase64']
 	 self._cfg['apiSecretKeyBase64'] = keyStore['apiKeyId']
+	 self._cfg['keyFileName']        = keyFileName
 
-	 self._cfg['keyFileName'] = keyFileName
-
-      self._cfg['apiUrl'] = self.validateUrl(apiUrl)
+      #
+      # Validate and Save Url
+      #
+      self.validateUrl(apiUrl)
 
    ####################################################################################################
    #
@@ -76,8 +77,8 @@ class keyChain(object):
    #
    ####################################################################################################
 
-   def __str__(self):
-      return 'keyChain'
+   # def __str__(self):
+   #    return 'keyChain'
 
    ####################################################################################################
 
@@ -97,7 +98,7 @@ class keyChain(object):
 
    ####################################################################################################
    #
-   # Functions to Validate API URL
+   # Method to Validate API URL
    #
    ####################################################################################################
 
@@ -115,22 +116,20 @@ class keyChain(object):
          Rough BNF of the Rules Used:
 
 	    Protocol    ::= 'https://'
-	    Controller  ::= IpAddress | DnsName			# Not validated in this version
+	    Controller  ::= IpAddress | DnsName				# Not validated in this version
 	    Service	::= ['zCenter' | 'zAccess'] 'webapi/doApi'
 
 	    apiUrl	::= Protocol Controller Service
       """
 
-      # str.replace(old, new[, max])
-
       apiUrl = Url
 
       if 'https' not in Url:
-         apiUrl = 'https://' + Url
+         apiUrl = 'https://' + apiUrl
 
       if 'webapi/doApi' not in apiUrl:
          apiUrl = apiUrl + '/webapi/doApi'
 
-      return apiUrl
+      self._cfg['apiUrl'] = apiUrl
 
    ####################################################################################################

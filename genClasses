@@ -134,6 +134,8 @@ foreach $classObj (@classObjs){
 	 #
 	 # Generate a Default ToDo Method
 	 #
+         print "      ToDo $Proto\n";
+
 	 ($class, $func) = split(/\./, $Line);
 
 	 push(@Meths, sprintf "   def %s_%s(self):\n", $class, $func);
