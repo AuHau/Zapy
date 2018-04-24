@@ -1,0 +1,98 @@
+   def syncWithController(self, ap, cp1, cp2):
+      """
+         It occurs to me that making the arguments to this routine be "AppProfile, From, To" might simplify this
+	 thing a lot...
+
+         If the CoipWanTypeTwo described by the config file exists, synchronize the data structure to the controller
+	 If it doesn't exist, create it.
+
+	 ToDo: Doesn't Handle multiple ranges for From / To components
+      """
+      
+      self._cfg['appProfileId'] = ap.get('appProfileId')
+
+      #
+      # Check to see if this CoipWan already exists
+      #
+      cwExists = False
+
+      info = ap.AppProfile_listCoipWans()
+
+      if len(info['data']) > 0:
+         for i in range(0, len(info['data'])):
+	    # print ">>>", info['data'][i]['coipWanName'], "<->", self._cfg['coipWanName']
+	    if info['data'][i]['coipWanName'] == self._cfg['coipWanName']:
+	       #
+	       # CoipWan Exists
+	       #
+	       print "Found and Existing CoIP Wan>", self._cfg['coipWanName']
+
+	       for key, val in info['data'][i].items():
+		  # print ">>>", key, "==", val
+		  self._cfg[key] = val
+	       
+	       cwExists = True
+	       break
+
+      if not cwExists:
+	 #
+	 # Prepare Common API Command Bits
+	 #
+
+	 cmd = {
+	    'cmd':'$AppProfile.addCoipWanTypeTwo',
+	    'args':{
+	       'appProfileId': self._cfg['appProfileId'],
+	       'coipWanName': self._cfg['coipWanName'],
+	       'direction': self._cfg['direction'],
+	    }
+	 }
+	 
+	 # print "Adding a New '{}' CoipWan to {}".format(self._cfg['coipWanType'], ap.get('appProfileName'))
+	 
+	 #
+	 # Determine Configuration
+	 #
+	 # cp1Id cp2Id    Type
+	 #   SG    EG     :typeTwo		Config is: SG -> EG
+	 #   EG    SG     :typeTwo		Config is: EG -> SG
+	 #
+
+	 cp1Id = cp1.getId()
+	 cp2Id = cp2.getId()
+
+	 if cp1Id is "serverGroupId": 
+	    #
+	    # From is ServerGroup, To is EdgeGateway
+	    #
+	    cmps = {
+	       'components':{
+		  'from': cp1.get('serverGroupId'),
+		  'toEdgeGateway': cp2.get('toEdgeGateway')
+	       }
+	    }
+
+	 else:
+	    #
+	    # From is EdgeGateway, To is ServerGroup
+	    #
+	    cmps = {
+	       'components':{
+		  'fromEdgeGateway': cp1.get('fromEdgeGateway'),
+		  'to': cp2.get('serverGroupId')
+	       }
+	    }
+
+	 #
+	 # Make it so
+	 #
+	 cmd['args'].update(cmps)
+
+	 info = self.makeZapyRequest(json.dumps(cmd))
+
+	 if info['status'] == 'Ok':
+	    self._cfg['coipWanId'] = info['data']['coipWanId']
+
+	 return info
+
+      return cwExists

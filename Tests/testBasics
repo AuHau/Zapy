@@ -10,130 +10,145 @@
 
 import sys
 import zapyClass
+import keyChain
 import AppProfile
 import CloudDomain
 import CloudServerPool
+import FabricServerPool
 import ServerGroup
 import CoipLan
-import CoipWan
+import CoipWanTypeOne
+import CoipWanTypeThree
+import EndServer
 import json
 
 #
 # Keys and Url
 #
-# SAP
-# zapiKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
-# zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
-#
-zapiKey = "/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json"
-zapyUrl = "https://usae.zentera.net/zCenter/webapi/doApi"
+zcKeys = keyChain.keyChain(
+   '/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json', 
+   'usae.zentera.net/zCenter'
+)
 
 #
 # Instantiate a Default App Profile
 #
-print "===Create a New App Profile===================================================="
-ap = AppProfile.AppProfile()
-ap.loadKeys(zapiKey, zapyUrl)
-ap.loadCfg("Configs/LesProfileOneCfg.json")
+print '\n===Create a New App Profile===================================================='
+ap = AppProfile.AppProfile(zcKeys, 'Configs/LesProfileOneCfg.json')
 ap.syncWithController()
-ap.saveCfg("LesProfileOneDef.json")
-ap.inspect()
+ap.saveCfg('LesProfileOneDef.json')
 
 #
 # Cloud Domains
 #
-print "===Create New Cloud Domain 8==================================================="
-cd8 = CloudDomain.CloudDomain()
-cd8.loadKeys(zapiKey, zapyUrl)
-cd8.loadCfg("Configs/cfgCloudDomain8.json")
+print '\n===Create New Cloud Domain 8==================================================='
+cd8 = CloudDomain.CloudDomain(zcKeys, 'Configs/cfgCloudDomain8.json')
 cd8.syncWithController()
-cd8.inspect()
 
-print "===Create New Cloud Domain 9==================================================="
-cd9 = CloudDomain.CloudDomain()
-cd9.loadKeys(zapiKey, zapyUrl)
-cd9.loadCfg("Configs/cfgCloudDomain9.json")
+print '\n===Create New Cloud Domain 9==================================================='
+cd9 = CloudDomain.CloudDomain(zcKeys, 'Configs/cfgCloudDomain9.json')
 cd9.syncWithController()
-cd9.inspect()
 
 #
 # Cloud Server Pools
 #
-print "===Create Cloud Server Pool 1=================================================="
-sp1 = CloudServerPool.CloudServerPool()
-sp1.loadKeys(zapiKey, zapyUrl)
-sp1.loadCfg("Configs/cfgCloudServerPool1.json")
-sp1.inspect()
+print '\n===Create Cloud Server Pool 1=================================================='
+sp1 = CloudServerPool.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool1.json')
 sp1.syncWithController(cd8)
-sp1.inspect()
 
-print "===Create Cloud Server Pool 2=================================================="
-sp2 = CloudServerPool.CloudServerPool()
-sp2.loadKeys(zapiKey, zapyUrl)
-sp2.loadCfg("Configs/cfgCloudServerPool2.json")
-sp2.inspect()
+print '\n===Create Cloud Server Pool 2=================================================='
+sp2 = CloudServerPool.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool2.json')
 sp2.syncWithController(cd9)
-sp2.inspect()
+
+#
+# Fabric Server Pools
+#
+print '\n===Create Fabric Server Pool 1================================================='
+fp1 = FabricServerPool.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool1.json')
+fp1.syncWithController(cd8)
+
+print '\n===Create Fabric Server Pool 2================================================='
+fp2 = FabricServerPool.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool2.json')
+fp2.syncWithController(cd9)
+
+#
+# Register the EndServers for the Edge Gateways
+#
+print '\n===Registering Edge Gateway 1=================================================='
+eg1 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway1.json')
+eg1.EndServer_register()
+eg1.inspect()
+
+print '\n===Registering Edge Gateway 2=================================================='
+eg2 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway2.json')
+eg2.EndServer_register()
+eg2.inspect()
+
+print '\n===Registering Edge Gateway 3=================================================='
+eg3 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway3.json')
+eg3.EndServer_register()
+eg3.inspect()
 
 #
 # Server Groups
 #
-print "===Create New Server Group 1==================================================="
-g1 = ServerGroup.ServerGroup()
-g1.loadKeys(zapiKey, zapyUrl)
-g1.loadCfg('Configs/cfgServerGroup1.json')
+print '\n===Create New Server Group 1==================================================='
+g1 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup1.json')
 g1.syncWithController(ap, cd8, g1)
-g1.inspect()
 
-print "===Create New Server Group 2==================================================="
-g2 = ServerGroup.ServerGroup()
-g2.loadKeys(zapiKey, zapyUrl)
-g2.loadCfg('Configs/cfgServerGroup2.json')
+print '\n===Create New Server Group 2==================================================='
+g2 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup2.json')
 g2.syncWithController(ap, cd8, g2)
-g2.inspect()
 
-print "===Create New Server Group 3==================================================="
-g3 = ServerGroup.ServerGroup()
-g3.loadKeys(zapiKey, zapyUrl)
-g3.loadCfg('Configs/cfgServerGroup3.json')
+print '\n===Create New Server Group 3==================================================='
+g3 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup3.json')
 g3.syncWithController(ap, cd9, g3)
-g3.inspect()
 
 #
 # CoIP Lan
 #
-print "===Create CoipLan=============================================================="
-cl = CoipLan.CoipLan()
-cl.loadKeys(zapiKey, zapyUrl)
-cl.loadCfg('Configs/cfgCoipLan.json')
-#l.syncWithController(ap, g1.get('serverGroupId'), g2.get('serverGroupId'))
+print '\n===Create CoipLan=============================================================='
+cl = CoipLan.CoipLan(zcKeys, 'Configs/cfgCoipLan.json')
 cl.syncWithController(ap, g1, g2)
-cl.inspect()
 
 #
-# CoIP Wan
+# CoIP Wans
 #
-print "===Create CoipWan=============================================================="
-cw = CoipWan.CoipWan()
-cw.loadKeys(zapiKey, zapyUrl)
-cw.loadCfg('Configs/cfgCoipWanTypeOne.json')
-cw.syncWithController(ap, g1, g3)
-cw.inspect()
+print '\n===Create CoipWan Type One====================================================='
+cw1 = CoipWanTypeOne.CoipWanTypeOne(zcKeys, 'Configs/cfgCoipWanTypeOne.json')
+cw1.syncWithController(ap, g1, g3)
 
-raw_input("Ready to Delete? ")
+print '\n===Create CoipWan Type Two====================================================='
+cw2 = CoipWanTypeTwo.CoipWanTypeTwo(zcKeys, 'Configs/cfgCoipWanTypeTwo.json')
+cw2.syncWithController(ap, g2, g3)
+
+print '\n===Create CoipWan Type Three==================================================='
+cw3 = CoipWanTypeThree.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThree.json')
+cw3.syncWithController(ap, eg1, eg2)
+cw3.inspect()
+
+raw_input('Ready to Delete? ')
 
 print
-print "   Deleting App Profile"
+print '   Deleting App Profile'
 ap.AppProfile_delete()
 
-print "   Deleting Cloud Server Pool"
+print '   Deleting Cloud Server Pools'
 sp1.CloudServerPool_delete()
 sp2.CloudServerPool_delete()
 
-print "   Deleting Cloud Domains"
+print '   Unregistering EndServers'
+eg1.EndServer_unregister()
+eg2.EndServer_unregister()
+
+print '   Deleting Fabric Server Pools'
+fp1.FabricServerPool_delete()
+fp2.FabricServerPool_delete()
+
+print '   Deleting Cloud Domains'
 cd8.CloudDomain_delete()
 cd9.CloudDomain_delete()
 
 print
-print "Delete Complete"
+print 'Delete Complete'
 print

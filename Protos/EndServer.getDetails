@@ -1,0 +1,16 @@
+   def EndServer_getDetails(self):
+      """
+         Zapi Call to EndServer.getDetails
+      """
+      cmd = {
+         "cmd":"$EndServer.getDetails",
+	 "args": {
+	    "endServerId": self._cfg['endServerId'],
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      # print info
+
+      return info

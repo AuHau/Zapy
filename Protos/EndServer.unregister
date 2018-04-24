@@ -1,0 +1,14 @@
+   def EndServer_unregister(self):
+      """
+         Zapi Call to EndServer.unregister
+      """
+      cmd = {
+         "cmd":"$EndServer.unregister",
+	 "args": {
+	    "endServerId": self._cfg['endServerId'],
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

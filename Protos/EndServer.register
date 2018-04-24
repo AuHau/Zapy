@@ -1,0 +1,69 @@
+   def EndServer_register(self):
+      """
+         Zapi Call to EndServer.register
+
+	 This function behaves both like a noraml method but also like syncWithController.
+
+	 That is, it registers an EndServer but also fills itself with the returned data from that operation.
+      """
+      cmd = {
+         "cmd":"$EndServer.register",
+	 "args": {
+	    "poolTag":       self._cfg['poolTag'],
+	    "hostname":      self._cfg['hostname'],
+	    "sshId":         self._cfg['sshId'],
+	    "sshPassword":   self._cfg['sshPassword'],
+	    "sshPort":       self._cfg['sshPort']
+	 }
+      }
+      
+      # "sshPrivateKey": self._cfg['sshPrivateKey'],
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      # print info
+
+      jobId = info["data"]["jobId"]
+
+      query = {
+         "cmd":"$EndServer.queryRegistrationStatus",
+	 "args": {
+	    "jobId": jobId
+	 }
+      }
+
+      notRegistered = True
+
+      #
+      # This is a Problem - It blocks until done potentially jamming up the entire Developer's script
+      #
+      sys.stdout.write('      Registering EndServer for Edge Gateway Duty ')
+
+      while notRegistered:
+         #
+	 # Don't Abuse the Internet - Check once per second for job completion
+	 #
+	 sys.stdout.write('.')
+	 sys.stdout.flush()
+
+         time.sleep(1)
+
+	 jobStatus = self.makeZapyRequest(json.dumps(query))
+	 
+	 # print "      ", jobStatus
+
+	 if 'done' in jobStatus['data']['jobStatus']:
+	    notRegistered = False
+
+	    self._cfg['endServerId'] = jobStatus['data']['endServerId']
+
+	    endServerDetails = self.EndServer_getDetails()
+
+	    for key, val in endServerDetails['data'].items():
+	       # print '   {:<25} = {:<25}'.format(key, val)
+	       self._cfg[key] = val
+
+	    print
+	    print "      Edge Gateway EndServerId == ", self._cfg['endServerId']
+
+	    return jobStatus['data']['endServerId']
