@@ -1,4 +1,4 @@
-   def FabricServerPool_create(self, cd, coipSubnet):
+   def FabricServerPool_create(self, cd):
       """
 	 Create a FabricServerPool
 
