@@ -1,8 +1,6 @@
    def AppProfile_addServerGroup(self, sg):
       """
 	 Zapi Call to add a Server Group to an Application Profile
-
-	 Wut
       """
 
       cmd = {

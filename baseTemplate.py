@@ -46,6 +46,8 @@ class ---CLASS---(zapyClass):
    def __init__(self, keyStore, *args):
       """
 	 Class Initialization
+	    keyStore: A passed keyChain Object
+	    args[0]:  The Path to the Configration File to be Loaded
 
          ---ATTRIB---
 

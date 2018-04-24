@@ -1,0 +1,26 @@
+{
+   "poolTag": "LesFabric2",
+   "hostname": "64.15.188.46",
+   "sshId": "root",
+   "sshPassword": "Acme*123!",
+   "sshPort": 22,
+   "toEdgeGateway": {
+      "endServerId": null,
+      "phySubnetMap": {
+	 "phySubnet": [
+	    {
+	       "from": "10.141.90.39",
+	       "to":   "10.141.90.39"
+	    }
+	 ]
+      },
+      "phySubnet":     null,
+      "coipFwdSubnet": null,
+      "phyFwdSubnet": [
+	 {
+	    "from": "10.141.90.139",
+	    "to":   "10.141.90.139"
+	 }
+      ]
+   }
+}
