@@ -64,7 +64,7 @@ class ---CLASS---(zapyClass):
       # Load a Config File if Passed
       #
       if len(args) > 0:
-	 print "   Loading Configuration File:", args[0]
+	 # print "   Loading Configuration File:", args[0]
          self.loadCfg(args[0])
 
       # for key, value in kwargs.items():

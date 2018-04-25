@@ -1,7 +1,7 @@
 {
    "serverGroupId":	null,
    "serverGroupName":	"Sg3",
-   "poolTag":		"LesCloudServerPool2",
+   "poolTag":		"LesCloudServerPool3",
    "description":	null,
    "siloMode":		true,
    "coipSubnet":	{"from": "200.23.0.1", "to": "200.23.0.5"},

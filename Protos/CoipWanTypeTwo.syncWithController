@@ -66,22 +66,22 @@
 	    # From is ServerGroup, To is EdgeGateway
 	    #
 	    cmps = {
-	       'components':{
-		  'from': cp1.get('serverGroupId'),
-		  'toEdgeGateway': cp2.get('toEdgeGateway')
-	       }
+	       'compId': cp1.get('serverGroupId'),
+	       'edgeGateway': cp2.get('toEdgeGateway')
 	    }
+
+	    cmps['edgeGateway']['endServerId'] = cp2.get('endServerId')
 
 	 else:
 	    #
 	    # From is EdgeGateway, To is ServerGroup
 	    #
 	    cmps = {
-	       'components':{
-		  'fromEdgeGateway': cp1.get('fromEdgeGateway'),
-		  'to': cp2.get('serverGroupId')
-	       }
+	       'edgeGateway': cp1.get('fromEdgeGateway'),
+	       'compId': cp2.get('serverGroupId')
 	    }
+	    
+	    cmps['edgeGateway']['endServerId'] = cp1.get('endServerId')
 
 	 #
 	 # Make it so

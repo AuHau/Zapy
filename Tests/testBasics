@@ -18,6 +18,7 @@ import FabricServerPool
 import ServerGroup
 import CoipLan
 import CoipWanTypeOne
+import CoipWanTypeTwo
 import CoipWanTypeThree
 import EndServer
 import json
@@ -49,6 +50,10 @@ print '\n===Create New Cloud Domain 9===========================================
 cd9 = CloudDomain.CloudDomain(zcKeys, 'Configs/cfgCloudDomain9.json')
 cd9.syncWithController()
 
+print '\n===Create New Cloud Domain 10=================================================='
+cd10 = CloudDomain.CloudDomain(zcKeys, 'Configs/cfgCloudDomain10.json')
+cd10.syncWithController()
+
 #
 # Cloud Server Pools
 #
@@ -59,6 +64,10 @@ sp1.syncWithController(cd8)
 print '\n===Create Cloud Server Pool 2=================================================='
 sp2 = CloudServerPool.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool2.json')
 sp2.syncWithController(cd9)
+
+print '\n===Create Cloud Server Pool 3=================================================='
+sp3 = CloudServerPool.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool3.json')
+sp3.syncWithController(cd10)
 
 #
 # Fabric Server Pools
@@ -71,62 +80,63 @@ print '\n===Create Fabric Server Pool 2=========================================
 fp2 = FabricServerPool.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool2.json')
 fp2.syncWithController(cd9)
 
+print '\n===Create Fabric Server Pool 3================================================='
+fp3 = FabricServerPool.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool3.json')
+fp3.syncWithController(cd10)
+
 #
 # Register the EndServers for the Edge Gateways
 #
 print '\n===Registering Edge Gateway 1=================================================='
 eg1 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway1.json')
 eg1.EndServer_register()
-eg1.inspect()
 
 print '\n===Registering Edge Gateway 2=================================================='
 eg2 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway2.json')
 eg2.EndServer_register()
-eg2.inspect()
 
 print '\n===Registering Edge Gateway 3=================================================='
 eg3 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway3.json')
 eg3.EndServer_register()
-eg3.inspect()
 
 #
 # Server Groups
 #
 print '\n===Create New Server Group 1==================================================='
-g1 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup1.json')
-g1.syncWithController(ap, cd8, g1)
+sg1 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup1.json')
+sg1.syncWithController(ap, cd8, sg1)
 
 print '\n===Create New Server Group 2==================================================='
-g2 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup2.json')
-g2.syncWithController(ap, cd8, g2)
+sg2 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup2.json')
+sg2.syncWithController(ap, cd8, sg2)
 
 print '\n===Create New Server Group 3==================================================='
-g3 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup3.json')
-g3.syncWithController(ap, cd9, g3)
+sg3 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup3.json')
+sg3.syncWithController(ap, cd9, sg3)
 
 #
 # CoIP Lan
 #
 print '\n===Create CoipLan=============================================================='
 cl = CoipLan.CoipLan(zcKeys, 'Configs/cfgCoipLan.json')
-cl.syncWithController(ap, g1, g2)
+cl.syncWithController(ap, sg1, sg2)
 
 #
 # CoIP Wans
 #
 print '\n===Create CoipWan Type One====================================================='
 cw1 = CoipWanTypeOne.CoipWanTypeOne(zcKeys, 'Configs/cfgCoipWanTypeOne.json')
-cw1.syncWithController(ap, g1, g3)
+cw1.syncWithController(ap, sg1, sg3)
 
 print '\n===Create CoipWan Type Two====================================================='
 cw2 = CoipWanTypeTwo.CoipWanTypeTwo(zcKeys, 'Configs/cfgCoipWanTypeTwo.json')
-cw2.syncWithController(ap, g2, g3)
+cw2.syncWithController(ap, sg2, eg3)
 
 print '\n===Create CoipWan Type Three==================================================='
 cw3 = CoipWanTypeThree.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThree.json')
 cw3.syncWithController(ap, eg1, eg2)
-cw3.inspect()
 
+print
 raw_input('Ready to Delete? ')
 
 print
@@ -136,18 +146,22 @@ ap.AppProfile_delete()
 print '   Deleting Cloud Server Pools'
 sp1.CloudServerPool_delete()
 sp2.CloudServerPool_delete()
+sp3.CloudServerPool_delete()
 
 print '   Unregistering EndServers'
 eg1.EndServer_unregister()
 eg2.EndServer_unregister()
+eg3.EndServer_unregister()
 
 print '   Deleting Fabric Server Pools'
 fp1.FabricServerPool_delete()
 fp2.FabricServerPool_delete()
+fp3.FabricServerPool_delete()
 
 print '   Deleting Cloud Domains'
 cd8.CloudDomain_delete()
 cd9.CloudDomain_delete()
+cd10.CloudDomain_delete()
 
 print
 print 'Delete Complete'

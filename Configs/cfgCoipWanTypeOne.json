@@ -2,7 +2,7 @@
    "appProfileName": "LesProfileOne",
    "appProfileId":   null,
    "coipWanId":      null,
-   "coipWanName":    "LesCoipWanTypeOne",
+   "coipWanName":    "LesCoipWanType1",
    "direction":      "biDir",
    "components":     null
 }
