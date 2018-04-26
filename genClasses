@@ -39,6 +39,14 @@ push(@classObjs, 'ZaUserGroup');
 print "\n";
 
 #
+# Keep some Statistics
+#
+$classCnt = 0;
+$methsCnt = 0;
+$protoCnt = 0;
+$todosCnt = 0;
+
+#
 # Outer Loop of Class Objects
 #
 foreach $classObj (@classObjs){
@@ -48,6 +56,8 @@ foreach $classObj (@classObjs){
 
    $className = lcfirst("${classObj}Name");
    $classId   = lcfirst("${classObj}Id");
+
+   $classCnt++;
 
    #
    # Generate Attributes
@@ -100,6 +110,8 @@ foreach $classObj (@classObjs){
 
       push(@Meths, "\n");
       push(@Meths, "   $Hashes\n\n");
+
+      $protoCnt++;
    }
 
    foreach $Line (@methFile){
@@ -110,7 +122,7 @@ foreach $classObj (@classObjs){
       #
       # Note: The indentation of the Protos files is critical. Currently, the Protos
       #       all have the proper (3 space) leading indentation because they are
-      #       subordinate to the zero indent of the basClass file.
+      #       subordinate to the zero indent of the baseClass file.
       #
       #       Ideally, this generator should not care about what's in the file, but
       #       should generate the proper indent
@@ -131,6 +143,8 @@ foreach $classObj (@classObjs){
 
 	 push(@Meths, "\n");
 	 push(@Meths, "   $Hashes\n\n");
+	 
+	 $protoCnt++;
       }
       else{
 	 #
@@ -153,7 +167,11 @@ foreach $classObj (@classObjs){
 	 push(@Meths, sprintf "      info = self.makeZapyRequest(json.dumps(cmd))\n\n");
 	 push(@Meths, sprintf "      return info\n\n");			
 	 push(@Meths, sprintf "   $Hashes\n\n");				
+	 
+	 $todosCnt++;
       }
+
+      $methsCnt++;
    }
 
    #
@@ -206,3 +224,11 @@ foreach $classObj (@classObjs){
 
    print "$classObj Class Generation Complete\n\n";
 }
+
+print "Generator Statistics\n";
+printf("   Total Classes = %5d\n", $classCnt);
+printf("   Total Methods = %5d\n", $methsCnt);
+printf("   Protos Used   = %5d\n", $protoCnt);
+printf("   ToDos Created = %5d\n", $todosCnt);
+printf("   Completion    = %5.2f%\n\n", $protoCnt / $methsCnt);
+

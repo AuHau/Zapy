@@ -1,0 +1,6 @@
+{
+   "poolTag":		"LesFabric3",
+   "description": 	"This Description",
+   "os":          	"linux",
+   "fabricServerType":	"edgeGateway"
+}
