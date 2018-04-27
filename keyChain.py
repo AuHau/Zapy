@@ -69,7 +69,7 @@ class keyChain:
       #
       # Validate and Save Url
       #
-      self.validateUrl(apiUrl)
+      self._cfg['apiUrl'] = self.validateUrl(apiUrl)
 
    ####################################################################################################
    #
@@ -122,7 +122,7 @@ class keyChain:
 
 	    Protocol    ::= 'https://'
 	    Controller  ::= IpAddress | DnsName				# Not validated in this version
-	    Service	::= ['zCenter' | 'zAccess'] 'webapi/doApi'
+	    Service	::= ['zCenter' | 'zAccess'] 'webapi/doApi'	# inserts 'raadmin' if needed
 
 	    apiUrl	::= Protocol Controller Service
       """
@@ -132,9 +132,15 @@ class keyChain:
       if 'https' not in Url:
          apiUrl = 'https://' + apiUrl
 
-      if 'webapi/doApi' not in apiUrl:
-         apiUrl = apiUrl + '/webapi/doApi'
+      if 'zAccess' in apiUrl:
+         if 'webapi/doApi' not in apiUrl:
+	    apiUrl = apiUrl + '/raadmin/webapi/doApi'
+      else:
+         if 'webapi/doApi' not in apiUrl:
+	    apiUrl = apiUrl + '/webapi/doApi'
 
-      self._cfg['apiUrl'] = apiUrl
+      apiUrl = apiUrl.replace('zAccess', 'zaccess')
+
+      return apiUrl
 
    ####################################################################################################

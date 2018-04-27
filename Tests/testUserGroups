@@ -2,67 +2,63 @@
 
 import sys
 import ZaUserGroup
+import keyChain
 import json
 
 #
 # Keys and Url
 #
-#zapyKey = "/home/lesds/.ZapyKeys/6b90a0ffc2c64499b43c41aa139bcfcd.json.txt"
-#zapyUrl = "https://64.191.192.72/zCenter/webapi/doApi"
-#zapyKey = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
-#zapyUrl = "https://64.191.192.72/zaccess/raadmin/webapi/doApi"
-#zapyKey = "/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json"
+zapyKey = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
+zapyUrl = "https://64.191.192.72/zAccess/raadmin/webapi/doApi"
 
-zapyKey = "/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json"
-zapyUrl = "https://usae.zentera.net/zaccess/raadmin/webapi/doApi"
+zaKeys = keyChain.keyChain(
+   '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
+   'usae.zentera.net/zAccess'
+)
 
 #
 # Instantiate a Default User Group
 #
-print "Create a New User Group Object with Class Defaults"
-ug = ZaUserGroup.ZaUserGroup()
-ug.loadKeys(zapyKey, zapyUrl)
-ug.loadCfg('Configs/cfgZaUserGroup.json')
-
-#
-# Test syncWithController
-#
+print
+ug = ZaUserGroup.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
+print 'Create a New User Group', ug.get('groupName')
 ug.syncWithController()
 ug.inspect()
-ug.saveCfg('Configs/defZaUserGroup.json')
-
-#
-# Test List User Groups - Before
-#
-print ug.ZaUserGroup_list()
-print
-print ug.ZaUserGroup_listUsers()
-print
 
 #
 # Test Add User
 #
-ug.ZaUserGroup_addUser("lesds")
+print 'Adding Users to User Group'
+ug.ZaUserGroup_addUser('lesds')
+ug.ZaUserGroup_addUser('alex')
+
 print
-print ug.ZaUserGroup_listUsers()
+print 'List Users in', ug.get('groupName')
+info =  ug.ZaUserGroup_listUsers()
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['account']
+
 print
 
-raw_input('Ready to Remove User from User Group? ')
+raw_input('Ready to Remove Users from User Group? ')
 
-ug.ZaUserGroup_removeUser("lesds")
+ug.ZaUserGroup_removeUser('lesds')
+
 print
-print ug.ZaUserGroup_listUsers()
-print
+print 'List Users in', ug.get('groupName')
+info =  ug.ZaUserGroup_listUsers()
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['account']
 
 #
 # Test Delete User Group
 #
+print
 raw_input('Ready to Delete User Group? ')
 ug.ZaUserGroup_delete()
-print
-#
-# Test List Users - After
-#
-print ug.ZaUserGroup_listUsers()
-print
 
+print
+print 'User Group Deleted'
+print

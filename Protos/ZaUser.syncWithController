@@ -17,6 +17,12 @@
       if not userExists:
          # print "Creating New ZaUser Profile"
 	 info = self.ZaUser_create()
+	 # print "Created"
 
-	 for key, val in info['data'].items():
-	    self._cfg[key] = val
+	 # print info
+
+	 if 'Ok' in info['status']:
+	    for key, val in info['data'].items():
+	       self._cfg[key] = val
+
+      return userExists
