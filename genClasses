@@ -22,17 +22,17 @@
 #
 # Each one listed here needs a matching Attribs, Methods, and optionally a Protos file
 #
-push(@classObjs, 'AppProfile');
-push(@classObjs, 'CloudDomain');
-push(@classObjs, 'CloudServerPool');
-push(@classObjs, 'CoipLan');
-push(@classObjs, 'CoipWanTypeOne');
-push(@classObjs, 'CoipWanTypeTwo');
-push(@classObjs, 'CoipWanTypeThree');
-push(@classObjs, 'EndServer');
-push(@classObjs, 'FabricServerPool');
-push(@classObjs, 'InlineDeviceGroup');
-push(@classObjs, 'ServerGroup');
+#ush(@classObjs, 'AppProfile');
+#ush(@classObjs, 'CloudDomain');
+#ush(@classObjs, 'CloudServerPool');
+#ush(@classObjs, 'CoipLan');
+#ush(@classObjs, 'CoipWanTypeOne');
+#ush(@classObjs, 'CoipWanTypeTwo');
+#ush(@classObjs, 'CoipWanTypeThree');
+#ush(@classObjs, 'EndServer');
+#ush(@classObjs, 'FabricServerPool');
+#ush(@classObjs, 'InlineDeviceGroup');
+#ush(@classObjs, 'ServerGroup');
 push(@classObjs, 'ZaUser');
 push(@classObjs, 'ZaUserGroup');
 

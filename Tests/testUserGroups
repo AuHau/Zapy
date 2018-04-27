@@ -8,9 +8,6 @@ import json
 #
 # Keys and Url
 #
-zapyKey = "/home/lesds/.ZapyKeys/5e7e389b833f4bf4bdc9373e1d94c386.json"
-zapyUrl = "https://64.191.192.72/zAccess/raadmin/webapi/doApi"
-
 zaKeys = keyChain.keyChain(
    '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
    'usae.zentera.net/zAccess'
