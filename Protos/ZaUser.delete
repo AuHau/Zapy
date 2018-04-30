@@ -1,6 +1,8 @@
-   def ZaUser_delete(self):
+   def ZaUser_delete(self, *args):
       """
          Zapi Call to $ZaUser.delete
+
+	 Optional argument is treated as the account name to delete
       """
 
       info = None
@@ -8,9 +10,14 @@
       cmd = {
          "cmd":"$ZaUser.delete",
          "args": {
-	    "account": self._cfg['account']
+	    "account": None
 	 }
       }
+
+      if args is not None:
+	 cmd['args']['account'] = args[0]
+      else:
+	 cmd['args']['account'] = self._cfg['account']
 
       info = self.makeZapyRequest(json.dumps(cmd))
 

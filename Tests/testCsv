@@ -1,0 +1,149 @@
+#!/usr/bin/python
+
+import sys
+import ZaUser
+import ZaUserGroup
+import keyChain
+import json
+import csv
+
+# https://stackoverflow.com/questions/19697846/how-to-convert-csv-file-to-multiline-json
+
+cfgFile = 'toad.json'
+cfgFile = 'toad.csv'
+
+zaKeys = keyChain.keyChain(
+   '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
+   'usae.zentera.net/zAccess'
+)
+
+#
+# Create a New User Group
+#
+newUserGroup = ZaUserGroup.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
+print 'Create a New User Group', newUserGroup.get('groupName')
+newUserGroup.syncWithController()
+newUserGroup.inspect()
+
+#
+# Read a CSV File and Create New Users
+#
+newUser = ZaUser.ZaUser(zaKeys)
+
+with open(cfgFile, 'rb') as csvFile:
+   myReader = csv.reader(csvFile)
+
+   i = 0
+
+   headers = []
+
+   for row in myReader:
+      if i == 0:
+         headers = row
+
+	 # print headers
+      else:
+         newUser.loadCfg('Configs/cfgZaUser.json')
+	 newUser.set('account',   row[headers.index('account')])
+	 newUser.set('firstName', row[headers.index('firstName')])
+	 newUser.set('lastName',  row[headers.index('lastName')])
+	 newUser.set('email',     row[headers.index('email')])
+	 newUser.set('userType',  row[headers.index('userType')])
+
+	 newUser.inspect()
+
+	 newUser.syncWithController()
+
+	 newUserGroup.ZaUserGroup_addUser(newUser)
+	 newUserGroup.syncWithController()
+
+      i = i + 1
+
+#
+# Add New Users to New User Group
+#
+
+print
+print 'List Users in', newUserGroup.get('groupName')
+info =  newUserGroup.ZaUserGroup_listUsers()
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['account']
+
+print
+raw_input('Ready to Delete Users? ')
+
+for i in range(len(info['data'])):
+   print '   Deleting', info['data'][i]['account']
+   newUser.ZaUser_delete(info['data'][i]['account'])
+
+print
+raw_input('Ready to Delete User Group? ')
+
+newUserGroup.ZaUserGroup_delete()
+
+print "   User Group Deleted"
+print
+
+sys.exit()
+
+"""
+   {
+      "account": "arnold", 
+      "firstName": "Arnold", 
+      "lastName": "Palmer", 
+      "forceChPwdNextLogin": null, 
+      "userType": "ldapOrAd", 
+      "expirationDate": null, 
+      "password": "MyPassWord", 
+      "email": "charm@zentera.net"
+   }
+"""
+
+#
+# Keys and Url
+#
+zaKeys = keyChain.keyChain(
+   '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
+   'usae.zentera.net/zAccess'
+)
+
+#
+# Instantiate a Default User Group
+#
+print
+ug = ZaUserGroup.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
+print 'Create a New User Group', ug.get('groupName')
+ug.syncWithController()
+ug.inspect()
+
+print
+print 'List Users in', ug.get('groupName')
+info =  ug.ZaUserGroup_listUsers()
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['account']
+
+print
+
+raw_input('Ready to Remove Users from User Group? ')
+
+ug.ZaUserGroup_removeUser('lesds')
+
+print
+print 'List Users in', ug.get('groupName')
+info =  ug.ZaUserGroup_listUsers()
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['account']
+
+#
+# Test Delete User Group
+#
+print
+raw_input('Ready to Delete User Group? ')
+ug.ZaUserGroup_delete()
+
+print
+print 'User Group Deleted'
+print

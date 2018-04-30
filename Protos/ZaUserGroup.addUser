@@ -1,17 +1,18 @@
-   def ZaUserGroup_addUser(self, account):
+   def ZaUserGroup_addUser(self, newUser):
       """
          Zapi Call to $ZaUserGroup.addUser
       """
 
       info = None
-
+      
       cmd = {
          "cmd":"$ZaUserGroup.addUser",
          "args": {
-	    "groupName": self._cfg["groupName"],
-	    "account": account
+	    "groupName": self._cfg["groupName"]
 	 }
       }
+
+      cmd['args'].update(newUser._cfg)
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
