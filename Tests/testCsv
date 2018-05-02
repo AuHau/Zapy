@@ -1,20 +1,22 @@
 #!/usr/bin/python
 
+"""
+   Tests the 'Cradle to Grave' creation of a Users, UserGroups, and ACL commands
+"""
+
 import sys
 import ZaUser
 import ZaUserGroup
+import ZaServer
 import keyChain
 import json
 import csv
 
-# https://stackoverflow.com/questions/19697846/how-to-convert-csv-file-to-multiline-json
-
-cfgFile = 'toad.json'
-cfgFile = 'toad.csv'
+cfgFile = 'Configs/cfgUserAdd.csv'
 
 zaKeys = keyChain.keyChain(
-   '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
-   'usae.zentera.net/zAccess'
+   '/home/lesds/.ZapyKeys/55452215ad40494f89aa5002ef604d12.json', 
+   'go.zentera.net/zAccess'
 )
 
 #
@@ -23,12 +25,15 @@ zaKeys = keyChain.keyChain(
 newUserGroup = ZaUserGroup.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
 print 'Create a New User Group', newUserGroup.get('groupName')
 newUserGroup.syncWithController()
-newUserGroup.inspect()
+# newUserGroup.inspect()
 
 #
 # Read a CSV File and Create New Users
 #
 newUser = ZaUser.ZaUser(zaKeys)
+
+print
+print 'Creating New Users'
 
 with open(cfgFile, 'rb') as csvFile:
    myReader = csv.reader(csvFile)
@@ -43,6 +48,7 @@ with open(cfgFile, 'rb') as csvFile:
 
 	 # print headers
       else:
+         print '   Adding New User', row[headers.index('account')]
          newUser.loadCfg('Configs/cfgZaUser.json')
 	 newUser.set('account',   row[headers.index('account')])
 	 newUser.set('firstName', row[headers.index('firstName')])
@@ -50,7 +56,10 @@ with open(cfgFile, 'rb') as csvFile:
 	 newUser.set('email',     row[headers.index('email')])
 	 newUser.set('userType',  row[headers.index('userType')])
 
-	 newUser.inspect()
+	 newUser.set('password',             'changeMe')
+	 newUser.set('forceChPwdNextLogin',  False)
+
+	 # newUser.inspect()
 
 	 newUser.syncWithController()
 
@@ -62,13 +71,18 @@ with open(cfgFile, 'rb') as csvFile:
 #
 # Add New Users to New User Group
 #
-
 print
 print 'List Users in', newUserGroup.get('groupName')
 info =  newUserGroup.ZaUserGroup_listUsers()
 
 for i in range(len(info['data'])):
    print '  ', info['data'][i]['account']
+
+#
+# Add an Access Server to the User Group
+#
+# print
+# newUserGroup.ZaUserGroup_addAcl('UC1ZZNCMAC01')
 
 print
 raw_input('Ready to Delete Users? ')
