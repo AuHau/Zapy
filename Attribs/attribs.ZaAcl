@@ -1,0 +1,11 @@
+aclId,		None
+serverId,	None
+hostname,	None
+osType,		None
+accessType,	None
+expirationTime,	None
+connectView,	None
+vncJoin,	None
+vncInvite,	None
+remoteGdb,	None
+rdpConsole,	None

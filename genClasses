@@ -29,12 +29,15 @@
 #ush(@classObjs, 'CoipWanTypeOne');
 #ush(@classObjs, 'CoipWanTypeTwo');
 #ush(@classObjs, 'CoipWanTypeThree');
-#ush(@classObjs, 'EndServer');
+push(@classObjs, 'EndServer');
 #ush(@classObjs, 'FabricServerPool');
 #ush(@classObjs, 'InlineDeviceGroup');
 #ush(@classObjs, 'ServerGroup');
 push(@classObjs, 'ZaUser');
 push(@classObjs, 'ZaUserGroup');
+push(@classObjs, 'ZaAcl');
+push(@classObjs, 'ZaServer');
+push(@classObjs, 'ZaZnsCluster');
 
 print "\n";
 
@@ -226,9 +229,9 @@ foreach $classObj (@classObjs){
 }
 
 print "Generator Statistics\n";
-printf("   Total Classes = %5d\n", $classCnt);
-printf("   Total Methods = %5d\n", $methsCnt);
-printf("   Protos Used   = %5d\n", $protoCnt);
-printf("   ToDos Created = %5d\n", $todosCnt);
-printf("   Completion    = %5.2f%\n\n", $protoCnt / $methsCnt);
+printf("   Total Classes = %6d\n", $classCnt);
+printf("   Total Methods = %6d\n", $methsCnt);
+printf("   Protos Used   = %6d\n", $protoCnt);
+printf("   ToDos Created = %6d\n", $todosCnt);
+printf("   Completion    = %6.2f%\n\n", (100.0 * ($protoCnt / $methsCnt)));
 

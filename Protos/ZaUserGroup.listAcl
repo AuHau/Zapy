@@ -1,0 +1,15 @@
+   def ZaUserGroup_listAcl(self):
+      """
+         Zapi Call to $ZaUserGroup.listAcl
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaUserGroup.listAcl",
+         "args":self._cfg
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

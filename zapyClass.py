@@ -155,10 +155,12 @@ class zapyClass(object):
 	 print
 
       #
-      # Make the API Request and Return the JSON Respons
+      # Make the API Request and Return the JSON Response
       #
       headers = {'content-type': 'application/json'}
       Post = requests.post(self.keyStore.get('apiUrl'), verify=False, data=request, headers=headers)
+      # print "%%%%%", Post.status_code
+      # print "%%%%%", Post.text
       info = json.loads(Post.content)
 
       if self._ZapyDEBUG:

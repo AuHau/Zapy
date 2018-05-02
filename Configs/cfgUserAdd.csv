@@ -1,0 +1,4 @@
+account,firstName,lastName,email,userType
+steve.jones@example.net,Steve,Jones,steve.jones@example.net,localUser
+john.smith@example.net,John,Smith,john.smith@example.net,localUser
+bill.withers@example.net,Bill,Withers,bill.withers@example.net,localUser

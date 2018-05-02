@@ -1,0 +1,50 @@
+   def ZaUserGroup_addAcl(self, hostname):
+      """
+         Zapi Call to $ZaUserGroup.addAcl
+
+	 Hostname argument is used to retrieve the serverId of that machine
+
+      """
+
+      esId = None
+
+      #
+      # Find the serverId of the hostname
+      #
+      cmd = {
+	 "cmd":"$ZaServer.list",
+	 "args": {
+	    "status": "active"
+	 }
+      }
+
+      print "***********", cmd
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      serverActive = False
+
+      for i in range(len(info['data'])):
+	 if hostname == info['data'][i]['hostname']:
+	    serverActive = True
+
+      if serverActive:
+	 esId = info['data'][i]['serverId']
+      else:
+         print "No Server named", hostname, "found"
+	 return None
+
+      info = None
+      
+      cmd = {
+         "cmd":"$ZaUserGroup.addAcl",
+         "args": {
+	    "groupName":   self._cfg["groupName"],
+	    "serverId":    esId,
+	    "connectView": True
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

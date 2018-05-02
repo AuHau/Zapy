@@ -1,0 +1,31 @@
+   def ZaServer_list(self, *args):
+      """
+         Zapi Call to $ZaServer.list
+
+	 Returns the list of Access Servers that are Active
+
+	 if a hostname is passed in the args list, returns the serverId of a matching server
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaServer.list",
+         "args": {
+	    "status": "all"
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+      
+      if args is not None:
+         serverActive = False
+
+         for i in range(len(info['data'])):
+	    if argv[0] == info['data'][i]['hostname']:
+	       serverActive = True
+
+	 if serverActive:
+	    return info['data'][i]['serverId']
+
+      return info

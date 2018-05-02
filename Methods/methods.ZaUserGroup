@@ -1,6 +1,8 @@
+ZaUserGroup.addAcl
 ZaUserGroup.addUser
 ZaUserGroup.create
 ZaUserGroup.delete
 ZaUserGroup.list
+ZaUserGroup.listAcl
 ZaUserGroup.listUsers
 ZaUserGroup.removeUser

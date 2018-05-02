@@ -9,4 +9,3 @@ EndServer.queryRegistrationStatus
 EndServer.register
 EndServer.unregister
 EndServer.upgradeZlink
-ZaServer.list
