@@ -23,9 +23,9 @@ zaKeys = keyChain.keyChain(
 # Create a New User Group
 #
 newUserGroup = ZaUserGroup.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
+print
 print 'Create a New User Group', newUserGroup.get('groupName')
 newUserGroup.syncWithController()
-# newUserGroup.inspect()
 
 #
 # Read a CSV File and Create New Users

@@ -1,0 +1,6 @@
+Many of the test scripts in this directory were developed in concert with the Zapy library.
+
+Due to the many changes to Zapy during the initial development, many of these scripts lag
+behind and will probably not run.
+
+The proof is left to the reader...
