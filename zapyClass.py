@@ -48,6 +48,7 @@ class zapyClass(object):
    #
    # Note: This requires more work to add Cert Verification to the System
    # See:  https://urllib3.readthedocs.io/en/latest/user-guide.html#ssl
+   #       https://stackoverflow.com/questions/27981545/suppress-insecurerequestwarning-unverified-https-request-is-being-made-in-pytho
    #
    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 

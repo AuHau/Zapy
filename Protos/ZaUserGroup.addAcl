@@ -7,40 +7,42 @@
       """
 
       esId = None
+      esId = 'cf30544604424671b8b3f83ad2b4898c'
 
-      #
-      # Find the serverId of the hostname
-      #
-      cmd = {
-	 "cmd":"$ZaServer.list",
-	 "args": {
-	    "status": "active"
+      if True == False:
+	 #
+	 # Find the serverId of the hostname
+	 #
+	 cmd = {
+	    "cmd":"$ZaServer.list",
+	    "args": {
+	       "status": "active"
+	    }
 	 }
-      }
 
-      print "***********", cmd
+	 # print "***********", cmd
 
-      info = self.makeZapyRequest(json.dumps(cmd))
+	 # info = self.makeZapyRequest(json.dumps(cmd))
 
-      serverActive = False
+	 serverActive = False
 
-      for i in range(len(info['data'])):
-	 if hostname == info['data'][i]['hostname']:
-	    serverActive = True
+	 for i in range(len(info['data'])):
+	    if hostname == info['data'][i]['hostname']:
+	       serverActive = True
 
-      if serverActive:
-	 esId = info['data'][i]['serverId']
-      else:
-         print "No Server named", hostname, "found"
-	 return None
+	    if serverActive:
+	       esId = info['data'][i]['serverId']
+	    else:
+	       print "No Server named", hostname, "found"
+	       return None
 
       info = None
-      
+	 
       cmd = {
-         "cmd":"$ZaUserGroup.addAcl",
-         "args": {
+	 "cmd":"$ZaUserGroup.addAcl",
+	 "args": {
 	    "groupName":   self._cfg["groupName"],
-	    "serverId":    esId,
+	    "serverId":    'cf30544604424671b8b3f83ad2b4898c',
 	    "connectView": True
 	 }
       }
