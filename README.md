@@ -16,3 +16,5 @@ Three Directories drive the generator:
 
 There is another "template file" for the Classes, "baseTemplate.py", that seeds the overall structure of
 the Classes.
+
+The generator outputs a directory, "Zapy", that contains the Python Package for the library.
