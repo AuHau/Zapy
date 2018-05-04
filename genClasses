@@ -22,17 +22,17 @@
 #
 # Each one listed here needs a matching Attribs, Methods, and optionally a Protos file
 #
-#ush(@classObjs, 'AppProfile');
-#ush(@classObjs, 'CloudDomain');
-#ush(@classObjs, 'CloudServerPool');
-#ush(@classObjs, 'CoipLan');
-#ush(@classObjs, 'CoipWanTypeOne');
-#ush(@classObjs, 'CoipWanTypeTwo');
-#ush(@classObjs, 'CoipWanTypeThree');
+push(@classObjs, 'AppProfile');
+push(@classObjs, 'CloudDomain');
+push(@classObjs, 'CloudServerPool');
+push(@classObjs, 'CoipLan');
+push(@classObjs, 'CoipWanTypeOne');
+push(@classObjs, 'CoipWanTypeTwo');
+push(@classObjs, 'CoipWanTypeThree');
 push(@classObjs, 'EndServer');
-#ush(@classObjs, 'FabricServerPool');
+push(@classObjs, 'FabricServerPool');
 #ush(@classObjs, 'InlineDeviceGroup');
-#ush(@classObjs, 'ServerGroup');
+push(@classObjs, 'ServerGroup');
 push(@classObjs, 'ZaUser');
 push(@classObjs, 'ZaUserGroup');
 push(@classObjs, 'ZaAcl');
@@ -50,10 +50,25 @@ $protoCnt = 0;
 $todosCnt = 0;
 
 #
+# Create Zapy/__init__.py
+#
+open($Fin, ">Zapy/__init__.py");
+print $Fin "from keyChain import keyChain\n";
+
+print "Copy Master Class Files\n";
+`cp zapyClass.py Zapy`;
+`cp keyChain.py Zapy`;
+
+#
 # Outer Loop of Class Objects
 #
 foreach $classObj (@classObjs){
    print "Generating $classObj Class Information\n";
+   
+   #
+   # __init__.py
+   #
+   print $Fin "from $classObj import $classObj\n";
    
    $Hashes = "#" x 101;
 
@@ -183,8 +198,8 @@ foreach $classObj (@classObjs){
    print "   Generating $classObj Class\n";
    @classFile = ();
    (@classFile) = `cat baseTemplate.py`;
-
-   open($Fot, ">$classObj.py");
+   
+   open($Fot, ">Zapy/$classObj.py");
       foreach $Line (@classFile){
 	 if ($Line =~ /---CLASS---/){
 	    $Line =~ s/---CLASS---/$classObj/;
@@ -227,6 +242,8 @@ foreach $classObj (@classObjs){
 
    print "$classObj Class Generation Complete\n\n";
 }
+   
+close($Fin);
 
 print "Generator Statistics\n";
 printf("   Total Classes = %6d\n", $classCnt);
