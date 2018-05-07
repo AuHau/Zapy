@@ -7,45 +7,69 @@
       """
 
       esId = None
-      esId = 'cf30544604424671b8b3f83ad2b4898c'
 
-      if True == False:
-	 #
-	 # Find the serverId of the hostname
-	 #
-	 cmd = {
-	    "cmd":"$ZaServer.list",
-	    "args": {
-	       "status": "active"
-	    }
-	 }
-
-	 # print "***********", cmd
-
-	 # info = self.makeZapyRequest(json.dumps(cmd))
-
-	 serverActive = False
-
-	 for i in range(len(info['data'])):
-	    if hostname == info['data'][i]['hostname']:
-	       serverActive = True
-
-	    if serverActive:
-	       esId = info['data'][i]['serverId']
-	    else:
-	       print "No Server named", hostname, "found"
-	       return None
-
-      info = None
-	 
+      #
+      # Find the serverId of the hostname
+      #
       cmd = {
-	 "cmd":"$ZaUserGroup.addAcl",
+	 "cmd":"$ZaServer.list",
 	 "args": {
-	    "groupName":   self._cfg["groupName"],
-	    "serverId":    'cf30544604424671b8b3f83ad2b4898c',
-	    "connectView": True
+	    "status": "active"
 	 }
       }
+
+      # print "***********", cmd
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      serverActive = False
+
+      for i in range(len(info['data'])):
+	 if hostname == info['data'][i]['hostname']:
+	    # print "Found", hostname
+	    serverActive = True
+	    esId = info['data'][i]['serverId']
+	    os   = info['data'][i]['osVersion']
+	    # print "esId ", esId
+	    # print "os   ", os
+
+      if not serverActive:
+	 print "No Server named", hostname, "found"
+	 return None
+
+      info = None
+
+      cmd = {}
+
+      if 'Windows' in os:
+         #
+	 # ToDo: Not Tested!
+	 #
+	 cmd = {
+	    "cmd":"$ZaUserGroup.addAcl",
+	    "args": {
+	       "groupName":   self._cfg["groupName"],
+	       "serverId":    esId,
+	       "connectView": True,
+	       "rdpConsole":  True
+	    }
+	 }
+      
+      else:
+         #
+	 # It's Linux
+	 #
+	 cmd = {
+	    "cmd":"$ZaUserGroup.addAcl",
+	    "args": {
+	       "groupName":   self._cfg["groupName"],
+	       "serverId":    esId,
+	       "connectView": True,
+	       "vncJoin":     False,
+	       "vncInvite":   False,
+	       "remoteGdb":   False
+	    }
+	 }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
