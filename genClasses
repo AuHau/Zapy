@@ -22,6 +22,8 @@
 #
 # Each one listed here needs a matching Attribs, Methods, and optionally a Protos file
 #
+# zCenter
+#
 push(@classObjs, 'AppProfile');
 push(@classObjs, 'CloudDomain');
 push(@classObjs, 'CloudServerPool');
@@ -33,6 +35,10 @@ push(@classObjs, 'EndServer');
 push(@classObjs, 'FabricServerPool');
 #ush(@classObjs, 'InlineDeviceGroup');
 push(@classObjs, 'ServerGroup');
+
+#
+# zAccess
+#
 push(@classObjs, 'ZaUser');
 push(@classObjs, 'ZaUserGroup');
 push(@classObjs, 'ZaAcl');
@@ -129,7 +135,7 @@ foreach $classObj (@classObjs){
       push(@Meths, "\n");
       push(@Meths, "   $Hashes\n\n");
 
-      $protoCnt++;
+      # $protoCnt++;
    }
 
    foreach $Line (@methFile){

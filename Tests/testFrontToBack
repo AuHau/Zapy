@@ -1,40 +1,52 @@
 #!/usr/bin/python
 
 """
-   Tests the 'Cradle to Grave' creation of a Users, UserGroups, and ACL commands
+   Tests the 'Cradle to Grave' creation of a Users, UserGroups, and Access Server Assignment
+
+   Here Ye! This is be a Prototype!
+
+   zapyClass.loadCfg() should abstract away different config file formats
+
 """
 
 import sys
-import ZaUser
-import ZaUserGroup
-import keyChain
-import json
+import Zapy
 import csv
 
-# https://stackoverflow.com/questions/19697846/how-to-convert-csv-file-to-multiline-json
-
-cfgFile = 'toad.json'
-cfgFile = 'toad.csv'
-
-zaKeys = keyChain.keyChain(
-   '/home/lesds/.ZapyKeys/9514f15959924fb181a52a0adcb47850.json.txt', 
+#
+# Load Keys
+#
+zaKeys = Zapy.keyChain(
+   '/home/lesds/.ZapyKeys/55452215ad40494f89aa5002ef604d12.json', 
    'go.zentera.net/zAccess'
 )
 
 #
 # Create a New User Group
 #
-newUserGroup = ZaUserGroup.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
+newUserGroup = Zapy.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
+print
 print 'Create a New User Group', newUserGroup.get('groupName')
 newUserGroup.syncWithController()
-newUserGroup.inspect()
 
+####################################################################################################
 #
 # Read a CSV File and Create New Users
 #
-newUser = ZaUser.ZaUser(zaKeys)
+# Prototype: Design goal to abstract config file formats (e.g. JSON, CSV...)
+#
+#    Ideally, we should abstract the format of a config file away from the user. If I refer to a
+#    CSV file, Zapy should just read it. Likewise with a JSON file.
+#
+####################################################################################################
 
-with open(cfgFile, 'rb') as csvFile:
+csvFileName = 'Configs/cfgUserAdd.csv'
+newUser     = Zapy.ZaUser(zaKeys)
+
+print
+print 'Creating New Users'
+
+with open(csvFileName, 'rb') as csvFile:
    myReader = csv.reader(csvFile)
 
    i = 0
@@ -43,19 +55,41 @@ with open(cfgFile, 'rb') as csvFile:
 
    for row in myReader:
       if i == 0:
+         #
+	 # Read the CSV Header Line so we can reference them by name during the decode
+	 #
+	 #    Assumes that the first line is the header line!
+	 #
          headers = row
 
 	 # print headers
+      
       else:
+	 #
+	 # Reset this default user from the basic configuration file
+	 #
          newUser.loadCfg('Configs/cfgZaUser.json')
-	 newUser.set('account',   row[headers.index('account')])
-	 newUser.set('firstName', row[headers.index('firstName')])
-	 newUser.set('lastName',  row[headers.index('lastName')])
-	 newUser.set('email',     row[headers.index('email')])
-	 newUser.set('userType',  row[headers.index('userType')])
+         
+	 print '   Adding New User', row[headers.index('account')]
 
-	 newUser.inspect()
+	 #
+	 # Set the Required attributes for a new User
+	 #
+	 #    Could use **kwargs...
+	 #
+	 newUser.set('account',   		row[headers.index('account')])
+	 newUser.set('firstName', 		row[headers.index('firstName')])
+	 newUser.set('lastName',  		row[headers.index('lastName')])
+	 newUser.set('email',     		row[headers.index('email')])
+	 newUser.set('userType',  		row[headers.index('userType')])
+	 newUser.set('password',            	'changeMe')
+	 newUser.set('forceChPwdNextLogin', 	False)
 
+	 # newUser.inspect()
+
+	 #
+	 # Create the New User
+	 #
 	 newUser.syncWithController()
 
 	 newUserGroup.ZaUserGroup_addUser(newUser)
@@ -63,12 +97,14 @@ with open(cfgFile, 'rb') as csvFile:
 
       i = i + 1
 
+####################################################################################################
+
 #
-# Add New Users to New User Group
+# List the Users in this User Group
 #
 print
 print 'List Users in', newUserGroup.get('groupName')
-info =  newUserGroup.ZaUserGroup_listUsers()
+info = newUserGroup.ZaUserGroup_listUsers()
 
 for i in range(len(info['data'])):
    print '  ', info['data'][i]['account']
@@ -77,8 +113,16 @@ for i in range(len(info['data'])):
 # Add an Access Server to the User Group
 #
 print
-newUserGroup.ZaUserGroup_addAcl('UC1ZZNCMAC01')
+print 'Adding Access Servers'
+for hostname in ['UC1ZZNCMAC01', 'UC1ZZNCMAC03']:
+   print '  ', hostname
+   newUserGroup.ZaUserGroup_addAcl(hostname)
 
+
+
+#
+# Cleanup Phase
+#
 print
 raw_input('Ready to Delete Users? ')
 
@@ -94,65 +138,3 @@ newUserGroup.ZaUserGroup_delete()
 print "   User Group Deleted"
 print
 
-sys.exit()
-
-"""
-   {
-      "account": "arnold", 
-      "firstName": "Arnold", 
-      "lastName": "Palmer", 
-      "forceChPwdNextLogin": null, 
-      "userType": "ldapOrAd", 
-      "expirationDate": null, 
-      "password": "MyPassWord", 
-      "email": "charm@zentera.net"
-   }
-"""
-
-#
-# Keys and Url
-#
-zaKeys = keyChain.keyChain(
-   '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
-   'usae.zentera.net/zAccess'
-)
-
-#
-# Instantiate a Default User Group
-#
-print
-ug = ZaUserGroup.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
-print 'Create a New User Group', ug.get('groupName')
-ug.syncWithController()
-ug.inspect()
-
-print
-print 'List Users in', ug.get('groupName')
-info =  ug.ZaUserGroup_listUsers()
-
-for i in range(len(info['data'])):
-   print '  ', info['data'][i]['account']
-
-print
-
-raw_input('Ready to Remove Users from User Group? ')
-
-ug.ZaUserGroup_removeUser('lesds')
-
-print
-print 'List Users in', ug.get('groupName')
-info =  ug.ZaUserGroup_listUsers()
-
-for i in range(len(info['data'])):
-   print '  ', info['data'][i]['account']
-
-#
-# Test Delete User Group
-#
-print
-raw_input('Ready to Delete User Group? ')
-ug.ZaUserGroup_delete()
-
-print
-print 'User Group Deleted'
-print

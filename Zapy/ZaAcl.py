@@ -96,14 +96,16 @@ class ZaAcl(zapyClass):
 
    def ZaAcl_delete(self):
       """
-         ToDo: Zapi Call to ZaAcl.delete
+         Zapi Call to $ZaAcl.delete
       """
 
       info = None
 
       cmd = {
-         "cmd":"$ZaAcl_delete",
-         "args":self._cfg
+         "cmd":"$ZaAcl.delete",
+         "args": {
+	    "aclId": self.aclId
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))

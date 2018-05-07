@@ -87,20 +87,26 @@ class ZaZnsCluster(zapyClass):
    #
    ####################################################################################################
 
-   def ZaAcl_list(self):
+   def ZaZnsCluster_list(self):
       """
-         ToDo: Zapi Call to ZaAcl.list
+         Zapi Call to $ZaZnsCluster.list
+
+	 Returns the list of Access ZnsClusters that are Active
       """
 
       info = None
 
       cmd = {
-         "cmd":"$ZaAcl_list",
-         "args":self._cfg
+         "cmd":"$ZaZnsCluster.list",
+         "args": None
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
+      if 'Ok' in info:
+         for i in range(len(info['data'])):
+	    self._cfg = info['data'][i]
+      
       return info
 
    #####################################################################################################
