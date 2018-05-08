@@ -1,0 +1,20 @@
+   def EndServer_getZlinkHostFileDownloadUrl(self, filePath):
+      """
+         Zapi Call to EndServer.getZlinkHostFileDownloadUrl
+      """
+      cmd = {
+         "cmd":"$EndServer.getZlinkHostFileDownloadUrl",
+	 "args": {
+	    "endServerId": self._cfg['endServerId'],
+	    "filePath": filePath
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      # print info
+
+      if 'Ok' in info['status']:
+	 return info['data']['downloadUrl']
+      else:
+         return None

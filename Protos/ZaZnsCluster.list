@@ -1,0 +1,21 @@
+   def ZaZnsCluster_list(self):
+      """
+         Zapi Call to $ZaZnsCluster.list
+
+	 Returns the list of Access ZnsClusters that are Active
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaZnsCluster.list",
+         "args": None
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      if 'Ok' in info:
+         for i in range(len(info['data'])):
+	    self._cfg = info['data'][i]
+      
+      return info

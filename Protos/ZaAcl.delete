@@ -1,0 +1,17 @@
+   def ZaAcl_delete(self):
+      """
+         Zapi Call to $ZaAcl.delete
+      """
+
+      info = None
+
+      cmd = {
+         "cmd":"$ZaAcl.delete",
+         "args": {
+	    "aclId": self.aclId
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info
