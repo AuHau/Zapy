@@ -198,12 +198,12 @@ class CloudServerPool(zapyClass):
 
    #####################################################################################################
 
-   def CloudServerPool_listEndServers(apiURL, usable):
+   def CloudServerPool_listEndServers(self, usable):
       """
 	 Lists available Cloud Servers in a Server Pool
       """
 
-      req = {
+      cmd = {
 	 'cmd':'$CloudServerPool.listEndServers',
 	 'args':{
 	    'poolTag': self._cfg['poolTag'],

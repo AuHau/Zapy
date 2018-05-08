@@ -1,0 +1,32 @@
+#!/usr/bin/python
+
+"""
+   Example Zapy Usage - Test the Basics of the Zapy Library
+
+   Builds an App Profile for a Hybrid Environment
+
+   Copyright (C) 2012-2018 Zentera Systems, Inc. - All Rights Reserved
+"""
+
+import sys
+import Zapy
+
+#
+# Keys and Url
+#
+zcKeys = Zapy.keyChain(
+   '/home/lesds/.ZapyKeys/c1faf7edeabd4da998f0d195265c7d6c.json', 
+   'go.zentera.net/zCenter'
+)
+
+csp = Zapy.CloudServerPool(zcKeys, 'cfgCSP')
+csp.inspect()
+
+# print csp.CloudServerPool_listEndServers('all')
+
+es1 = Zapy.EndServer(zcKeys, 'cfgES1')
+
+print es1.EndServer_getZlinkHostFileDownloadUrl('/usr/local/zasa/zasa.log')
+
+print es1.EndServer_getZlinkLogDownloadUrl()
+

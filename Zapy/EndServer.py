@@ -157,39 +157,48 @@ class EndServer(zapyClass):
 
    #####################################################################################################
 
-   def EndServer_getZlinkHostFileDownloadUrl(self):
+   def EndServer_getZlinkHostFileDownloadUrl(self, filePath):
       """
-         ToDo: Zapi Call to EndServer.getZlinkHostFileDownloadUrl
+         Zapi Call to EndServer.getZlinkHostFileDownloadUrl
       """
-
-      info = None
-
       cmd = {
-         "cmd":"$EndServer_getZlinkHostFileDownloadUrl",
-         "args":self._cfg
+         "cmd":"$EndServer.getZlinkHostFileDownloadUrl",
+	 "args": {
+	    "endServerId": self._cfg['endServerId'],
+	    "filePath": filePath
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
-      return info
+      # print info
+
+      if 'Ok' in info['status']:
+	 return info['data']['downloadUrl']
+      else:
+         return None
 
    #####################################################################################################
 
    def EndServer_getZlinkLogDownloadUrl(self):
       """
-         ToDo: Zapi Call to EndServer.getZlinkLogDownloadUrl
+         Zapi Call to EndServer.getZlinkLogDownloadUrl
       """
-
-      info = None
-
       cmd = {
-         "cmd":"$EndServer_getZlinkLogDownloadUrl",
-         "args":self._cfg
+         "cmd":"$EndServer.getZlinkLogDownloadUrl",
+	 "args": {
+	    "endServerId": self._cfg['endServerId']
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
-      return info
+      # print info
+
+      if 'Ok' in info['status']:
+	 return info['data']['downloadUrl']
+      else:
+         return None
 
    #####################################################################################################
 
