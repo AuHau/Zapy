@@ -1,0 +1,15 @@
+   def AppProfile_deactivate(self):
+      """
+         Zapi Call to AppProfile.deactivate
+      """
+
+      cmd = {
+         "cmd":"$AppProfile.deactivate",
+	 "args": {
+	    "appProfileId": self._cfg['appProfileId']
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

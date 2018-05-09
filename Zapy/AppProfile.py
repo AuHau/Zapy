@@ -264,14 +264,14 @@ class AppProfile(zapyClass):
 
    def AppProfile_deactivate(self):
       """
-         ToDo: Zapi Call to AppProfile.deactivate
+         Zapi Call to AppProfile.deactivate
       """
 
-      info = None
-
       cmd = {
-         "cmd":"$AppProfile_deactivate",
-         "args":self._cfg
+         "cmd":"$AppProfile.deactivate",
+	 "args": {
+	    "appProfileId": self._cfg['appProfileId']
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))

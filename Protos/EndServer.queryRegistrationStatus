@@ -1,0 +1,9 @@
+   def EndServer_queryRegistrationStatus(self):
+      """
+         Zapi Call to EndServer.queryRegistrationStatus
+
+	 Note: This call is automagically handled in EndServer_register() and
+	 FabricServer_register() and usually not needed.
+      """
+
+      pass

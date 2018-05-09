@@ -1,0 +1,16 @@
+   def EndServer_upgradeZlink(self):
+      """
+         Zapi Call to EndServer.upgradeZlink
+      """
+      cmd = {
+         "cmd":"$EndServer.upgradeZlink",
+	 "args": {
+	    "endServerId": self._cfg['endServerId'],
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      # print info
+
+      return info

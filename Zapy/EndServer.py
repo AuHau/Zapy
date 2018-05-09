@@ -240,19 +240,13 @@ class EndServer(zapyClass):
 
    def EndServer_queryRegistrationStatus(self):
       """
-         ToDo: Zapi Call to EndServer.queryRegistrationStatus
+         Zapi Call to EndServer.queryRegistrationStatus
+
+	 Note: This call is automagically handled in EndServer_register() and
+	 FabricServer_register() and usually not needed.
       """
 
-      info = None
-
-      cmd = {
-         "cmd":"$EndServer_queryRegistrationStatus",
-         "args":self._cfg
-      }
-
-      info = self.makeZapyRequest(json.dumps(cmd))
-
-      return info
+      pass
 
    #####################################################################################################
 
@@ -347,17 +341,18 @@ class EndServer(zapyClass):
 
    def EndServer_upgradeZlink(self):
       """
-         ToDo: Zapi Call to EndServer.upgradeZlink
+         Zapi Call to EndServer.upgradeZlink
       """
-
-      info = None
-
       cmd = {
-         "cmd":"$EndServer_upgradeZlink",
-         "args":self._cfg
+         "cmd":"$EndServer.upgradeZlink",
+	 "args": {
+	    "endServerId": self._cfg['endServerId'],
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
+
+      # print info
 
       return info
 
