@@ -160,51 +160,39 @@ class AppProfile(zapyClass):
    def AppProfile_addCoipWanTypeOne(self):
       """
          Zapi Call to AppProfile.addCoipWanTypeOne
+
+	 Non-Functional Stub: Please Use CoipWanTypeOne.syncWithController()
       """
-      cmd = {
-         "cmd":"$AppProfile.addCoipWanTypeOne",
-	 "args": self._cfg
-      }
 
-      info = self.makeZapyRequest(json.dumps(cmd))
+      print "Non-Functional Stub: Please Use CoipWanTypeOne.syncWithController()"
 
-      return info
+      pass
 
    #####################################################################################################
 
    def AppProfile_addCoipWanTypeThree(self):
       """
-         ToDo: Zapi Call to AppProfile.addCoipWanTypeThree
+         Zapi Call to AppProfile.addCoipWanTypeThree
+
+	 Non-Functional Stub: Please Use CoipWanTypeThree.syncWithController()
       """
 
-      info = None
+      print "Non-Functional Stub: Please Use CoipWanTypeThree.syncWithController()"
 
-      cmd = {
-         "cmd":"$AppProfile_addCoipWanTypeThree",
-         "args":self._cfg
-      }
-
-      info = self.makeZapyRequest(json.dumps(cmd))
-
-      return info
+      pass
 
    #####################################################################################################
 
    def AppProfile_addCoipWanTypeTwo(self):
       """
-         ToDo: Zapi Call to AppProfile.addCoipWanTypeTwo
+         Zapi Call to AppProfile.addCoipWanTypeTwo
+
+	 Non-Functional Stub: Please Use CoipWanTypeTwo.syncWithController()
       """
 
-      info = None
+      print "Non-Functional Stub: Please Use CoipWanTypeTwo.syncWithController()"
 
-      cmd = {
-         "cmd":"$AppProfile_addCoipWanTypeTwo",
-         "args":self._cfg
-      }
-
-      info = self.makeZapyRequest(json.dumps(cmd))
-
-      return info
+      pass
 
    #####################################################################################################
 

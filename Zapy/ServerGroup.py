@@ -153,39 +153,41 @@ class ServerGroup(zapyClass):
 
    #####################################################################################################
 
-   def ServerGroup_autoAddEndServers(self):
+   def ServerGroup_autoAddEndServers(self, esCount):
       """
-         ToDo: Zapi Call to ServerGroup.autoAddEndServers
-      """
+         Zapi Call to ServerGroup.autoAddEndServers
 
-      info = None
+	 Adds the 'esCount' of endServerIds to this ServerGroup
+      """
 
       cmd = {
-         "cmd":"$ServerGroup_autoAddEndServers",
-         "args":self._cfg
+         "cmd": "$ServerGroup.autoAddEndServers",
+	 "args": {
+	    "serverGroupId": self._cfg['serverGroupId'],
+	    "endServers": esCount
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
-      return info
 
    #####################################################################################################
 
    def ServerGroup_configureFailClose(self):
       """
-         ToDo: Zapi Call to ServerGroup.configureFailClose
+         Zapi Call to ServerGroup.configureFailClose
       """
 
-      info = None
-
       cmd = {
-         "cmd":"$ServerGroup_configureFailClose",
-         "args":self._cfg
+         "cmd": "$ServerGroup.configureFailClose",
+	 "args": {
+	    "serverGroupId": self._cfg['serverGroupId'],
+	    "failClose":     self._cfg['failClose']
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
-      return info
 
    #####################################################################################################
 
@@ -207,34 +209,38 @@ class ServerGroup(zapyClass):
 
    #####################################################################################################
 
-   def ServerGroup_manualAddEndServers(self):
+   def ServerGroup_manualAddEndServers(self, esList):
       """
-         ToDo: Zapi Call to ServerGroup.manualAddEndServers
-      """
+         Zapi Call to ServerGroup.manualAddEndServers
 
-      info = None
+	 Adds the 'esList' of endServerIds to this ServerGroup
+
+	    sg.ServerGroup_manualAddEndServers([<sgId1>, <sgId2>, ...])
+      """
 
       cmd = {
-         "cmd":"$ServerGroup_manualAddEndServers",
-         "args":self._cfg
+         "cmd": "$ServerGroup.manualAddEndServers",
+	 "args": {
+	    "serverGroupId": self._cfg['serverGroupId'],
+	    "endServers":    esList
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
-      return info
 
    #####################################################################################################
 
    def ServerGroup_listEndServers(self):
       """
-         ToDo: Zapi Call to ServerGroup.listEndServers
+         Zapi Call to $ServerGroup.listEndServers
       """
 
-      info = None
-
       cmd = {
-         "cmd":"$ServerGroup_listEndServers",
-         "args":self._cfg
+         "cmd":"$ServerGroup.listEndServers",
+         "args": {
+	    "serverGroupId": self._cfg["serverGroupId"]
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
@@ -261,21 +267,25 @@ class ServerGroup(zapyClass):
 
    #####################################################################################################
 
-   def ServerGroup_removeEndServers(self):
+   def ServerGroup_removeEndServers(self, esList):
       """
-         ToDo: Zapi Call to ServerGroup.removeEndServers
-      """
+         Zapi Call to ServerGroup.removeEndServers
 
-      info = None
+	 Removes the 'esList' of endServerIds from this ServerGroup
+
+	    sg.ServerGroup_removeEndServers([<sgId1>, <sgId2>, ...])
+      """
 
       cmd = {
-         "cmd":"$ServerGroup_removeEndServers",
-         "args":self._cfg
+         "cmd": "$ServerGroup.removeEndServers",
+	 "args": {
+	    "serverGroupId": self._cfg['serverGroupId'],
+	    "endServers":    esList
+	 }
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
-      return info
 
    #####################################################################################################
 

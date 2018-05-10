@@ -1,0 +1,19 @@
+   def ServerGroup_removeEndServers(self, esList):
+      """
+         Zapi Call to ServerGroup.removeEndServers
+
+	 Removes the 'esList' of endServerIds from this ServerGroup
+
+	    sg.ServerGroup_removeEndServers([<sgId1>, <sgId2>, ...])
+      """
+
+      cmd = {
+         "cmd": "$ServerGroup.removeEndServers",
+	 "args": {
+	    "serverGroupId": self._cfg['serverGroupId'],
+	    "endServers":    esList
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+

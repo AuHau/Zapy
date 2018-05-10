@@ -1,12 +1,10 @@
    def AppProfile_addCoipWanTypeOne(self):
       """
          Zapi Call to AppProfile.addCoipWanTypeOne
+
+	 Non-Functional Stub: Please Use CoipWanTypeOne.syncWithController()
       """
-      cmd = {
-         "cmd":"$AppProfile.addCoipWanTypeOne",
-	 "args": self._cfg
-      }
 
-      info = self.makeZapyRequest(json.dumps(cmd))
+      print "Non-Functional Stub: Please Use CoipWanTypeOne.syncWithController()"
 
-      return info
+      pass

@@ -1,0 +1,15 @@
+   def ServerGroup_listEndServers(self):
+      """
+         Zapi Call to $ServerGroup.listEndServers
+      """
+
+      cmd = {
+         "cmd":"$ServerGroup.listEndServers",
+         "args": {
+	    "serverGroupId": self._cfg["serverGroupId"]
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info

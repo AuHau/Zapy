@@ -1,0 +1,17 @@
+   def ServerGroup_autoAddEndServers(self, esCount):
+      """
+         Zapi Call to ServerGroup.autoAddEndServers
+
+	 Adds the 'esCount' of endServerIds to this ServerGroup
+      """
+
+      cmd = {
+         "cmd": "$ServerGroup.autoAddEndServers",
+	 "args": {
+	    "serverGroupId": self._cfg['serverGroupId'],
+	    "endServers": esCount
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+

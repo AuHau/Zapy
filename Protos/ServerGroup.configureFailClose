@@ -1,0 +1,15 @@
+   def ServerGroup_configureFailClose(self):
+      """
+         Zapi Call to ServerGroup.configureFailClose
+      """
+
+      cmd = {
+         "cmd": "$ServerGroup.configureFailClose",
+	 "args": {
+	    "serverGroupId": self._cfg['serverGroupId'],
+	    "failClose":     self._cfg['failClose']
+	 }
+      }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
+
