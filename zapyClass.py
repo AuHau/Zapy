@@ -123,6 +123,11 @@ class zapyClass(object):
       print
 
    ####################################################################################################
+   
+   def setDebug(self, debug):
+      self._ZapyDEBUG = debug
+   
+   ####################################################################################################
    #
    # Routines to Hide the Complexity of the API Requests
    #

@@ -1,0 +1,10 @@
+   def AppProfile_addCoipWanTypeThree(self):
+      """
+         Zapi Call to AppProfile.addCoipWanTypeThree
+
+	 Non-Functional Stub: Please Use CoipWanTypeThree.syncWithController()
+      """
+
+      print "Non-Functional Stub: Please Use CoipWanTypeThree.syncWithController()"
+
+      pass
