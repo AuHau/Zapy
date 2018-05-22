@@ -23,7 +23,11 @@
 
       # print info
 
-      jobId = info["data"]["jobId"]
+      if 'Ok' in info['status']:
+         jobId = info["data"]["jobId"]
+      else:
+         print "Error in Endserver_register: No jobId returned from API call"
+	 return None
 
       query = {
          "cmd":"$EndServer.queryRegistrationStatus",

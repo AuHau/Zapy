@@ -9,24 +9,13 @@
 """
 
 import sys
-import zapyClass
-import keyChain
-import AppProfile
-import CloudDomain
-import CloudServerPool
-import FabricServerPool
-import ServerGroup
-import CoipLan
-import CoipWanTypeOne
-import CoipWanTypeTwo
-import CoipWanTypeThree
-import EndServer
-import json
+import Zapy
+import getpass
 
 #
 # Keys and Url
 #
-zcKeys = keyChain.keyChain(
+zcKeys = Zapy.keyChain(
    '/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json', 
    'usae.zentera.net/zCenter'
 )
@@ -34,106 +23,112 @@ zcKeys = keyChain.keyChain(
 #
 # Instantiate a Default App Profile
 #
-print '\n===Create a New App Profile===================================================='
-ap = AppProfile.AppProfile(zcKeys, 'Configs/LesProfileOneCfg.json')
+print 'Create a New App Profile'
+ap = Zapy.AppProfile(zcKeys, 'Configs/LesProfileOneCfg.json')
 ap.syncWithController()
 ap.saveCfg('LesProfileOneDef.json')
 
 #
 # Cloud Domains
 #
-print '\n===Create New Cloud Domain 8==================================================='
-cd8 = CloudDomain.CloudDomain(zcKeys, 'Configs/cfgCloudDomain8.json')
+print 'Create New Cloud Domain 8'
+cd8 = Zapy.CloudDomain(zcKeys, 'Configs/cfgCloudDomain8.json')
 cd8.syncWithController()
 
-print '\n===Create New Cloud Domain 9==================================================='
-cd9 = CloudDomain.CloudDomain(zcKeys, 'Configs/cfgCloudDomain9.json')
+print 'Create New Cloud Domain 9'
+cd9 = Zapy.CloudDomain(zcKeys, 'Configs/cfgCloudDomain9.json')
 cd9.syncWithController()
 
-print '\n===Create New Cloud Domain 10=================================================='
-cd10 = CloudDomain.CloudDomain(zcKeys, 'Configs/cfgCloudDomain10.json')
+print 'Create New Cloud Domain 10'
+cd10 = Zapy.CloudDomain(zcKeys, 'Configs/cfgCloudDomain10.json')
 cd10.syncWithController()
 
 #
 # Cloud Server Pools
 #
-print '\n===Create Cloud Server Pool 1=================================================='
-sp1 = CloudServerPool.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool1.json')
+print 'Create Cloud Server Pool 1'
+sp1 = Zapy.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool1.json')
 sp1.syncWithController(cd8)
 
-print '\n===Create Cloud Server Pool 2=================================================='
-sp2 = CloudServerPool.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool2.json')
+print 'Create Cloud Server Pool 2'
+sp2 = Zapy.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool2.json')
 sp2.syncWithController(cd9)
 
-print '\n===Create Cloud Server Pool 3=================================================='
-sp3 = CloudServerPool.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool3.json')
+print 'Create Cloud Server Pool 3'
+sp3 = Zapy.CloudServerPool(zcKeys, 'Configs/cfgCloudServerPool3.json')
 sp3.syncWithController(cd10)
 
 #
 # Fabric Server Pools
 #
-print '\n===Create Fabric Server Pool 1================================================='
-fp1 = FabricServerPool.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool1.json')
+print 'Create Fabric Server Pool 1'
+fp1 = Zapy.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool1.json')
 fp1.syncWithController(cd8)
 
-print '\n===Create Fabric Server Pool 2================================================='
-fp2 = FabricServerPool.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool2.json')
+print 'Create Fabric Server Pool 2'
+fp2 = Zapy.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool2.json')
 fp2.syncWithController(cd9)
 
-print '\n===Create Fabric Server Pool 3================================================='
-fp3 = FabricServerPool.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool3.json')
+print 'Create Fabric Server Pool 3'
+fp3 = Zapy.FabricServerPool(zcKeys, 'Configs/cfgFabricServerPool3.json')
 fp3.syncWithController(cd10)
 
 #
 # Register the EndServers for the Edge Gateways
 #
-print '\n===Registering Edge Gateway 1=================================================='
-eg1 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway1.json')
-eg1.EndServer_register()
+sshPassword = getpass.getpass('   Enter Password > ')
 
-print '\n===Registering Edge Gateway 2=================================================='
-eg2 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway2.json')
+print 'Registering Edge Gateway 1'
+eg1 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway1.json')
+eg1.set('sshPassword', sshPassword)
+eg1.EndServer_register()
+eg1.inspect()
+
+print 'Registering Edge Gateway 2'
+eg2 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway2.json')
+eg2.set('sshPassword', sshPassword)
 eg2.EndServer_register()
 
-print '\n===Registering Edge Gateway 3=================================================='
-eg3 = EndServer.EndServer(zcKeys, 'Configs/cfgEdgeGateway3.json')
+print 'Registering Edge Gateway 3'
+eg3 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway3.json')
+eg3.set('sshPassword', sshPassword)
 eg3.EndServer_register()
 
 #
 # Server Groups
 #
-print '\n===Create New Server Group 1==================================================='
-sg1 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup1.json')
+print 'Create New Server Group 1'
+sg1 = Zapy.ServerGroup(zcKeys, 'Configs/cfgServerGroup1.json')
 sg1.syncWithController(ap, cd8, sg1)
 
-print '\n===Create New Server Group 2==================================================='
-sg2 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup2.json')
+print 'Create New Server Group 2'
+sg2 = Zapy.ServerGroup(zcKeys, 'Configs/cfgServerGroup2.json')
 sg2.syncWithController(ap, cd8, sg2)
 
-print '\n===Create New Server Group 3==================================================='
-sg3 = ServerGroup.ServerGroup(zcKeys, 'Configs/cfgServerGroup3.json')
+print 'Create New Server Group 3'
+sg3 = Zapy.ServerGroup(zcKeys, 'Configs/cfgServerGroup3.json')
 sg3.syncWithController(ap, cd9, sg3)
 
 #
 # CoIP Lan
 #
-print '\n===Create CoipLan=============================================================='
-cl = CoipLan.CoipLan(zcKeys, 'Configs/cfgCoipLan.json')
+print 'Create CoipLan'
+cl = Zapy.CoipLan(zcKeys, 'Configs/cfgCoipLan.json')
 cl.syncWithController(ap, sg1, sg2)
 
 #
 # CoIP Wans
 #
-print '\n===Create CoipWan Type One====================================================='
-cw1 = CoipWanTypeOne.CoipWanTypeOne(zcKeys, 'Configs/cfgCoipWanTypeOne.json')
+print 'Create CoipWan Type One'
+cw1 = Zapy.CoipWanTypeOne(zcKeys, 'Configs/cfgCoipWanTypeOne.json')
 cw1.syncWithController(ap, sg1, sg3)
 
-print '\n===Create CoipWan Type Two====================================================='
-cw2 = CoipWanTypeTwo.CoipWanTypeTwo(zcKeys, 'Configs/cfgCoipWanTypeTwo.json')
+print 'Create CoipWan Type Two'
+cw2 = Zapy.CoipWanTypeTwo(zcKeys, 'Configs/cfgCoipWanTypeTwo.json')
 cw2.syncWithController(ap, sg2, eg3)
 
-print '\n===Create CoipWan Type Three==================================================='
-cw3 = CoipWanTypeThree.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThree.json')
+print 'Create CoipWan Type Three'
+cw3 = Zapy.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThree.json')
 cw3.syncWithController(ap, eg1, eg2)
 
 print

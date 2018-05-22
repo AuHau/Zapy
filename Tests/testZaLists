@@ -1,0 +1,51 @@
+#!/usr/bin/python
+
+"""
+   List all Users, UserGroups, and Access Servers on a Controller
+"""
+
+import sys
+import Zapy
+
+#
+# Load Keys
+#
+zaKeys = Zapy.keyChain(
+   '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
+   'usae.zentera.net/zAccess'
+)
+
+#
+# List the Users
+#
+print
+print 'Users:', zaKeys.get('controllerName')
+#au = Zapy.ZaUser(zaKeys, 'Configs/cfgZaUser.json')
+zau = Zapy.ZaUser(zaKeys, None)
+info = zau.ZaUser_list()
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['account']
+
+#
+# List the User Groups
+#
+print
+print 'User Groups:', zaKeys.get('controllerName')
+#ag = Zapy.ZaUserGroup(zaKeys, 'Configs/cfgZaUserGroup.json')
+zag = Zapy.ZaUserGroup(zaKeys, None)
+info = zag.ZaUserGroup_list()
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['groupName']
+
+#
+# List the Access Servers
+#
+print
+print 'Access Servers:', zaKeys.get('controllerName')
+zas = Zapy.ZaServer(zaKeys, None)
+info = zas.ZaServer_list('all')
+
+for i in range(len(info['data'])):
+   print '  ', info['data'][i]['hostname']

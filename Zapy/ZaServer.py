@@ -81,7 +81,9 @@ class ZaServer(zapyClass):
       #
       # Load a Config File if Passed
       #
-      if len(args) > 0:
+      if args[0] is None:
+         pass
+      else:
 	 # print "   Loading Configuration File:", args[0]
          self.loadCfg(args[0])
 
@@ -116,7 +118,7 @@ class ZaServer(zapyClass):
       cmd = {
          "cmd":"$ZaServer.list",
          "args": {
-	    "status": "all"
+	    "status": args[0]
 	 }
       }
 
@@ -126,7 +128,7 @@ class ZaServer(zapyClass):
          serverActive = False
 
          for i in range(len(info['data'])):
-	    if argv[0] == info['data'][i]['hostname']:
+	    if args[0] == info['data'][i]['hostname']:
 	       serverActive = True
 
 	 if serverActive:

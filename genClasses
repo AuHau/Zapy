@@ -251,10 +251,16 @@ foreach $classObj (@classObjs){
    
 close($Fin);
 
+#
+# Statistics
+#
+$totalLines = `wc -l Zapy/[A-z]*.py | tail -1`;
+
 print "Generator Statistics\n";
 printf("   Total Classes = %6d\n", $classCnt);
 printf("   Total Methods = %6d\n", $methsCnt);
 printf("   Protos Used   = %6d\n", $protoCnt);
 printf("   ToDos Created = %6d\n", $todosCnt);
+printf("   Total Lines   = %6d\n", $totalLines);
 printf("   Completion    = %6.2f%\n\n", (100.0 * ($protoCnt / $methsCnt)));
 

@@ -81,7 +81,9 @@ class EndServer(zapyClass):
       #
       # Load a Config File if Passed
       #
-      if len(args) > 0:
+      if args[0] is None:
+         pass
+      else:
 	 # print "   Loading Configuration File:", args[0]
          self.loadCfg(args[0])
 
@@ -275,7 +277,11 @@ class EndServer(zapyClass):
 
       # print info
 
-      jobId = info["data"]["jobId"]
+      if 'Ok' in info['status']:
+         jobId = info["data"]["jobId"]
+      else:
+         print "Error in Endserver_register: No jobId returned from API call"
+	 return None
 
       query = {
          "cmd":"$EndServer.queryRegistrationStatus",

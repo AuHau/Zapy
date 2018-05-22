@@ -12,7 +12,7 @@
       cmd = {
          "cmd":"$ZaServer.list",
          "args": {
-	    "status": "all"
+	    "status": args[0]
 	 }
       }
 
@@ -22,7 +22,7 @@
          serverActive = False
 
          for i in range(len(info['data'])):
-	    if argv[0] == info['data'][i]['hostname']:
+	    if args[0] == info['data'][i]['hostname']:
 	       serverActive = True
 
 	 if serverActive:

@@ -2,7 +2,7 @@
    "poolTag": "LesFabric2",
    "hostname": "64.15.185.136",
    "sshId": "root",
-   "sshPassword": "xxxxxxxx",
+   "sshPassword": null,
    "sshPort": 22,
    "toEdgeGateway": {
       "endServerId": null,

@@ -42,6 +42,7 @@ class keyChain:
 
       self._cfg = {
 	 "keyFileName":		None,
+	 "controllerName":	None,
 	 "apiUrl":		None,
 	 "apiKeyId":		None,
 	 "apiSecretKeyBase64":	None
@@ -126,6 +127,8 @@ class keyChain:
 
 	    apiUrl	::= Protocol Controller Service
       """
+
+      self._cfg['controllerName'] = Url
 
       apiUrl = Url
 
