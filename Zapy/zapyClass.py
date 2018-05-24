@@ -270,6 +270,18 @@ class zapyClass(object):
       return None
    
    ####################################################################################################
+
+   def listZnsClusters(self):
+      """
+         Returns the List of ZNS Clusters
+      """
+      cmd = {"cmd":"$Customer.listZnsClusters", "args": None}
+      
+      info = self.makeZapyRequest(json.dumps(cmd))
+
+      return info
+   
+   ####################################################################################################
    #
    # Functions to Validate IP Addresses
    #

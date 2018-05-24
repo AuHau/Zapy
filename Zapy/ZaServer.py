@@ -138,19 +138,37 @@ class ZaServer(zapyClass):
 
    #####################################################################################################
 
-   def ZaServer_setZnsCluster(self):
+   def ZaServer_setZnsCluster(self, *args):
       """
-         ToDo: Zapi Call to ZaServer.setZnsCluster
+         Zapi Call to $ZaServer.setZnsCluster
+
+	 Sets the setZnsCluster for an Access Server
+
+	 if the args list is empty, use the default ZNS Cluster,
+	    otherwise, pass a znsClusterId to set a different cluster
       """
 
       info = None
 
       cmd = {
-         "cmd":"$ZaServer_setZnsCluster",
-         "args":self._cfg
+         "cmd":"$ZaServer.setZnsCluster",
+         "args": {
+	    "serverId": self._cfg["serverId"],
+	    "znsClusterId": None
+	 }
       }
 
+      if len(args) > 0:
+         cmd['args']['znsClusterId'] = args[0]
+	 self._cfg["znsClusterId"] = args[0]
+      else:
+	 self._cfg["znsClusterId"] = 'default'
+
+      # print "\n>>>", cmd
+
       info = self.makeZapyRequest(json.dumps(cmd))
+
+      # print "\n<<<", info
 
       return info
 
