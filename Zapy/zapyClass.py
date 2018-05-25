@@ -37,8 +37,8 @@ class zapyClass(object):
    _cfg = {
    }
 
-   _ZapyDEBUG = True
    _ZapyDEBUG = False
+   _ZapyDEBUG = True
 
    _ZapyKey = None
    _ZapyUrl = None

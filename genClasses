@@ -16,6 +16,10 @@
 # possibility of such damage.
 #
 # This software is for demonstration purposes only and is not supported by Zentera Systems, Inc.
+#
+
+$genDate = `date +"%d-%b-%Y %H:%m:%S"`;
+chop($genDate);
 
 #
 # List of Object Classes to Generate
@@ -220,6 +224,10 @@ foreach $classObj (@classObjs){
 	    next;
 	 }
 
+	 if ($Line =~ /---DATE---/){
+	    $Line =~ s/---DATE---/$genDate/;
+	 }
+
 	 if ($Line =~ /---CLASSNAME---/){
 	    $Line =~ s/---CLASSNAME---/$className/;
 	 }
@@ -256,7 +264,8 @@ close($Fin);
 #
 $totalLines = `wc -l Zapy/[A-z]*.py | tail -1`;
 
-print "Generator Statistics\n";
+$dt = `date +"%d-%b-%Y"`;
+print "Generator Statistics - ", $dt;
 printf("   Total Classes = %6d\n", $classCnt);
 printf("   Total Methods = %6d\n", $methsCnt);
 printf("   Protos Used   = %6d\n", $protoCnt);
