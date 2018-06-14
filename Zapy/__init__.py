@@ -8,6 +8,7 @@ from CoipWanTypeTwo import CoipWanTypeTwo
 from CoipWanTypeThree import CoipWanTypeThree
 from EndServer import EndServer
 from FabricServerPool import FabricServerPool
+from InlineDeviceGroup import InlineDeviceGroup
 from ServerGroup import ServerGroup
 from ZaUser import ZaUser
 from ZaUserGroup import ZaUserGroup

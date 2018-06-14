@@ -10,5 +10,6 @@ AppProfile.deactivate
 AppProfile.delete
 AppProfile.listCoipWans
 AppProfile.listInlineDeviceGroups
+AppProfile.listInlineDeviceGroupByName
 AppProfile.listServerGroups
 AppProfile.listServerGroupByName

@@ -10,3 +10,6 @@
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
+
+      if 'CloudDomainInUse' in info['status']:
+         print '   WARN: Cloud Domain', self._cfg['cloudDomainName'], 'is in use. Not deleted'

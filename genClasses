@@ -24,7 +24,7 @@ chop($genDate);
 #
 # List of Object Classes to Generate
 #
-# Each one listed here needs a matching Attribs, Methods, and optionally a Protos file
+# Each one listed here needs a matching Attribs, Methods, and optionally a set of Protos files
 #
 # zCenter
 #
@@ -37,7 +37,7 @@ push(@classObjs, 'CoipWanTypeTwo');
 push(@classObjs, 'CoipWanTypeThree');
 push(@classObjs, 'EndServer');
 push(@classObjs, 'FabricServerPool');
-#ush(@classObjs, 'InlineDeviceGroup');
+push(@classObjs, 'InlineDeviceGroup');	# Not yet implemented in Zapy but full control possible
 push(@classObjs, 'ServerGroup');
 
 #

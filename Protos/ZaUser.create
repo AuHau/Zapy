@@ -1,6 +1,8 @@
    def ZaUser_create(self):
       """
          Zapi Call to $ZaUser.create
+
+	 Note: "forceChpwdNextLogin" defaults to False but should probably be True
       """
 
       info = None

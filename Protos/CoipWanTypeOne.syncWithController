@@ -25,7 +25,7 @@
 	       #
 	       # CoipWan Exists
 	       #
-	       print "Found and Existing CoIP Wan>", self._cfg['coipWanName']
+	       print "   INFO: Found and Existing CoIP Wan>", self._cfg['coipWanName']
 
 	       for key, val in info['data'][i].items():
 		  # print ">>>", key, "==", val

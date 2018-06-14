@@ -1,6 +1,6 @@
-inlineDeviceGroupId
-inlineDeviceGroupName
-poolTag
-description
-coipSubnet
-cloudDomainId
+inlineDeviceGroupId,	None
+inlineDeviceGroupName,	None
+poolTag,		None
+description,		None
+coipSubnet,		None
+cloudDomainId,		None

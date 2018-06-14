@@ -34,7 +34,8 @@ class keyChain:
    def __init__(self, keyFileName, apiUrl):
       """
 	 Class Configuration Attributes
-	    keyFileName: 	File Name of the APi Key Pair
+	    keyFileName: 	File Name of the API Key Pair
+	    controllerName:	Shortened URL e.g "zen.example.com"
 	    apiKeyId:		API Key Id Token
 	    apiSecretKeyBase64:	API Secret Key Token
 	    apiUrl:		URL of the Target Controller
@@ -43,9 +44,9 @@ class keyChain:
       self._cfg = {
 	 "keyFileName":		None,
 	 "controllerName":	None,
-	 "apiUrl":		None,
 	 "apiKeyId":		None,
-	 "apiSecretKeyBase64":	None
+	 "apiSecretKeyBase64":	None,
+	 "apiUrl":		None
       }
 
       if self._ZapyDEBUG:
@@ -71,6 +72,11 @@ class keyChain:
       # Validate and Save Url
       #
       self._cfg['apiUrl'] = self.validateUrl(apiUrl)
+
+      #
+      # We should wipe the keyStore object and delete it...
+      #    Even if it goes out of scope it might still be in memory!
+      #
 
    ####################################################################################################
    #

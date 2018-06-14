@@ -25,7 +25,7 @@
 	       #
 	       # CoipWan Exists
 	       #
-	       print "Found and Existing CoIP Wan>", self._cfg['coipWanName']
+	       print "   INFO: Found and Existing CoIP Wan>", self._cfg['coipWanName']
 
 	       for key, val in info['data'][i].items():
 		  # print ">>>", key, "==", val
@@ -63,6 +63,9 @@
 	 #
 	 cmps['fromEdgeGateway']['endServerId'] = cp1.get('endServerId')
 	 cmps['toEdgeGateway']['endServerId']   = cp2.get('endServerId')
+	 
+	 # print ">>> Cp1", cmps['fromEdgeGateway']['endServerId']
+	 # print ">>> Cp2", cmps['toEdgeGateway']['endServerId']
 
 	 #
 	 # Make it so

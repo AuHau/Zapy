@@ -37,8 +37,8 @@ class zapyClass(object):
    _cfg = {
    }
 
-   _ZapyDEBUG = False
    _ZapyDEBUG = True
+   _ZapyDEBUG = False
 
    _ZapyKey = None
    _ZapyUrl = None
@@ -373,6 +373,6 @@ class zapyClass(object):
       valid = False
 
       if int(port) in range(1, 65535):
-         valid = 1
+         valid = 1	# Should return True
 
       return valid

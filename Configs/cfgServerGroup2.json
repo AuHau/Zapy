@@ -4,7 +4,7 @@
    "poolTag":		"LesCloudServerPool1",
    "description":	null,
    "siloMode":		true,
-   "coipSubnet":	{"from": "196.55.0.1", "to": "196.55.0.5"},
+   "coipSubnet":	{"from": "23.23.23.23", "to": "23.23.23.26"},
    "failClose":		null,
    "cloudDomainId":	null
 }
