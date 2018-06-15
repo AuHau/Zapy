@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl 
 
 #
 # Zapy Class Generator
@@ -58,6 +58,9 @@ $classCnt = 0;
 $methsCnt = 0;
 $protoCnt = 0;
 $todosCnt = 0;
+$errorCnt = 0;
+
+@errors = ();
 
 #
 # Create Zapy/__init__.py
@@ -148,13 +151,6 @@ foreach $classObj (@classObjs){
       #    If a Prototype exists for this Method use it
       #    Else generate a default "ToDo" method
       #
-      # Note: The indentation of the Protos files is critical. Currently, the Protos
-      #       all have the proper (3 space) leading indentation because they are
-      #       subordinate to the zero indent of the baseClass file.
-      #
-      #       Ideally, this generator should not care about what's in the file, but
-      #       should generate the proper indent
-      #
       $Line =~ s/^\s+//;
       $Line =~ s/\s+$//;
 
@@ -164,6 +160,23 @@ foreach $classObj (@classObjs){
       if(-e $Proto){
          print "      Using Prototype $Proto\n";
 	 (@protoFile) = `cat $Proto`;
+
+	 #
+	 # Note: The indentation of the Protos files is critical. Currently, the Protos
+	 #       all have the proper (3 space) leading indentation because they are
+	 #       subordinate to the zero indent of the baseClass file.
+	 #
+	 #       Ideally, this generator should not care about what's in the file, but
+	 #       should generate the proper indent
+	 #
+
+	 $defLine = `grep def $Proto`;
+	 if($defLine =~ /^   def/){
+	 }
+	 else{
+	    push(@errors, "ERROR: Malformed Indentation in $Proto!");
+	    $errorCnt ++;
+	 }
 
 	 foreach $protoLine (@protoFile){
 	    push(@Meths, $protoLine);
@@ -263,6 +276,19 @@ close($Fin);
 # Statistics
 #
 $totalLines = `wc -l Zapy/[A-z]*.py | tail -1`;
+
+if($errorCnt > 0){
+   print "Errors Found:\n";
+
+   foreach $error (@errors){
+      print "   $error\n";
+   }
+
+   print "\n";
+}
+else{
+   print "No Errors Found\n\n";
+}
 
 $dt = `date +"%d-%b-%Y"`;
 print "Generator Statistics - ", $dt;

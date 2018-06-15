@@ -18,3 +18,6 @@ There is another "template file" for the Classes, "baseTemplate.py", that seeds 
 the Classes.
 
 The generator outputs a directory, "Zapy", that contains the Python Package for the library.
+
+Note: Do not directly edit the generated Python files in the Zapy library! Make the changes in
+      the appropriate Attribs. Methods, or Proto files and regenerate!
