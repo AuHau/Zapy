@@ -11,5 +11,8 @@
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
-      
+
+      if 'CloudServerPoolInUse' in info['status']:
+	 print '   WARN: Cloud Server Pool', self._cfg['poolTag'], 'is in use. Not deleted'
+
       return info

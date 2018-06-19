@@ -10,6 +10,8 @@
       # Determine if this EndServer is Already Registered
       #
 
+      # targetPool.inspect()
+
       esRegistered = False
 
       if 'cloudServerPool' in targetPool.getName():
@@ -30,10 +32,11 @@
 
 	 if 'endServerId' in self._cfg:
 	    self._cfg['endServerId'] = esRegistered
-
+         
 	 if 'toEdgeGateway' in self._cfg:
 	    self._cfg['toEdgeGateway']['endServerId'] = esRegistered
-	 else:
+	 
+	 if 'fromEdgeGateway' in self._cfg:
 	    self._cfg['fromEdgeGateway']['endServerId'] = esRegistered
 	 
 	 details = self.EndServer_getDetails()
@@ -49,7 +52,7 @@
 	 #
 	 # Make It So
 	 #
-         # print '   Registering a EndServer', self._cfg['hostname'], 'in', self._cfg['poolTag']
+         # print '   Registering EndServer', self._cfg['hostname'], 'in', self._cfg['poolTag']
 
 	 cmd = {
 	    "cmd":"$EndServer.register",
@@ -113,6 +116,6 @@
 		  self._cfg[key] = val
 
 	       print
-	       print "      Edge Gateway EndServerId == ", self._cfg['endServerId']
+	       print "      EndServerId == ", self._cfg['endServerId']
 
 	       return jobStatus['data']['endServerId']

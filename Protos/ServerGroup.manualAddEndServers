@@ -17,3 +17,6 @@
 
       info = self.makeZapyRequest(json.dumps(cmd))
 
+      # print ">>>"
+      # print info
+      # print "<<<"

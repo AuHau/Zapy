@@ -6,7 +6,7 @@
          If the CoipWanTypeOne described by the config file exists, synchronize the data structure to the controller
 	 If it doesn't exist, create it.
 
-	 ToDo: Doesn't Handle multiple ranges for From / To components
+	 ToDo: Should Handle multiple ranges for From / To components - More testing needed!
       """
       
       self._cfg['appProfileId'] = ap.get('appProfileId')

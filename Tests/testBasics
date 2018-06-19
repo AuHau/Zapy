@@ -75,6 +75,18 @@ fp2.syncWithController(cd2)
 #
 sshPassword = getpass.getpass('   Enter Password > ')
 
+print 'Registering EndServer 1'
+es1 = Zapy.EndServer(zcKeys, 'Configs/cfgEndServer1.json')
+es1.set('endServerId', None)
+es1.set('sshPassword', sshPassword)
+es1.EndServer_register(sp1)
+
+print 'Registering EndServer 2'
+es2 = Zapy.EndServer(zcKeys, 'Configs/cfgEndServer2.json')
+es2.set('endServerId', None)
+es2.set('sshPassword', sshPassword)
+es2.EndServer_register(sp2)
+
 print 'Registering Edge Gateway 1'
 eg1 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway1.json')
 eg1.set('endServerId', None)
@@ -109,6 +121,15 @@ sg3 = Zapy.ServerGroup(zcKeys, 'Configs/cfgServerGroup3.json')
 sg3.syncWithController(ap, cd2, sg3)
 
 #
+# Assign Servers
+#
+print 'Add EndServer to Server Group 1'
+sg1.ServerGroup_manualAddEndServers([es1.get('endServerId')])
+
+print 'Add EndServer to Server Group 2'
+sg2.ServerGroup_manualAddEndServers([es2.get('endServerId')])
+
+#
 # CoIP Lan
 #
 print 'Create CoipLan'
@@ -131,24 +152,26 @@ cw3 = Zapy.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThree.json')
 cw3.syncWithController(ap, eg1, eg2)
 
 print
-ans = raw_input("Type 'k' to keep EndServers, <Return> to delete all > ")
+ans = raw_input("Type 'a' to to delete all, <Return> to keep EndServers > ")
 
 print
 print 'Deleting App Profile'
 ap.AppProfile_delete()
 
+if 'a' in ans:
+   print 'Unregistering EndServers'
+   es1.EndServer_unregister()
+   es2.EndServer_unregister()
+   eg1.EndServer_unregister()
+   eg2.EndServer_unregister()
+   eg3.EndServer_unregister()
+else:
+   print 'Keeping EndServers Registered'
+
 print 'Deleting Cloud Server Pools'
 sp1.CloudServerPool_delete()
 sp2.CloudServerPool_delete()
 sp3.CloudServerPool_delete()
-
-if 'k' in ans:
-   print 'Keeping EndServers Registered'
-else:
-   print 'Unregistering EndServers'
-   eg1.EndServer_unregister()
-   eg2.EndServer_unregister()
-   eg3.EndServer_unregister()
 
 print 'Deleting Fabric Server Pools'
 fp1.FabricServerPool_delete()

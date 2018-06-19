@@ -11,5 +11,8 @@
       }
 
       info = self.makeZapyRequest(json.dumps(cmd))
+
+      if 'FabricServerPoolInUse' in info['status']:
+	 print '   WARN: Fabric Server Pool', self._cfg['poolTag'], 'is in use. Not deleted'
       
       return info
