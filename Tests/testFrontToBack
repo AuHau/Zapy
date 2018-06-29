@@ -16,9 +16,15 @@ import csv
 #
 # Load Keys
 #
+
 zaKeys = Zapy.keyChain(
-   '/home/lesds/.ZapyKeys/55452215ad40494f89aa5002ef604d12.json', 
-   'go.zentera.net/zAccess'
+   '/home/lesds/.ZapyKeys/ee4160675d6d4079b255a6aabaeadf3f.json', 
+   'usae.zentera.net/zAccess'
+)
+
+zcKeys = Zapy.keyChain(
+   '/home/lesds/.ZapyKeys/a62b836b0b4e4ea6afbca04f18360bad.json', 
+   'usae.zentera.net/zCenter'
 )
 
 #
@@ -41,7 +47,7 @@ newUserGroup.syncWithController()
 ####################################################################################################
 
 csvFileName = 'Configs/cfgUserAdd.csv'
-newUser     = Zapy.ZaUser(zaKeys)
+newUser     = Zapy.ZaUser(zaKeys, None)
 
 print
 print 'Creating New Users'
@@ -83,7 +89,7 @@ with open(csvFileName, 'rb') as csvFile:
 	 newUser.set('email',     		row[headers.index('email')])
 	 newUser.set('userType',  		row[headers.index('userType')])
 	 newUser.set('password',            	'changeMe')
-	 newUser.set('forceChPwdNextLogin', 	False)
+	 newUser.set('forceChPwdNextLogin', 	True)
 
 	 # newUser.inspect()
 
@@ -114,11 +120,24 @@ for i in range(len(info['data'])):
 #
 print
 print 'Adding Access Servers'
-for hostname in ['UC1ZZNCMAC01', 'UC1ZZNCMAC03']:
+for hostname in ['UC1ZZNCLAND0101', 'UC1ZZNCLSF0201']:
    print '  ', hostname
    newUserGroup.ZaUserGroup_addAcl(hostname)
 
-
+#
+# Change the Description in the New User Group
+#
+# Note: The Description Edit command will not be available until rev 4.3.1
+#
+ap = Zapy.AppProfile(zcKeys, 'Configs/LesProfileOneCfg.json')
+version = ap.getControllerSoftwareVersions()
+if "4.3.1" in version['zcenterVersion']:
+   print
+   print "Edit UserGroup Description"
+   print "   Before: Description of", newUserGroup.get('groupName'), "==", newUserGroup.get('description')
+   newUserGroup.set('description', 'Set by API');
+   newUserGroup.ZaUserGroup_editDesc()
+   print "   After:  Description of", newUserGroup.get('groupName'), "==", newUserGroup.get('description')
 
 #
 # Cleanup Phase

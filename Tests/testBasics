@@ -85,7 +85,7 @@ print 'Registering EndServer 2'
 es2 = Zapy.EndServer(zcKeys, 'Configs/cfgEndServer2.json')
 es2.set('endServerId', None)
 es2.set('sshPassword', sshPassword)
-es2.EndServer_register(sp2)
+es2.EndServer_register(sp1)
 
 print 'Registering Edge Gateway 1'
 eg1 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway1.json')
