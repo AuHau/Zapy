@@ -50,6 +50,8 @@
 	 }
       }
 
+      # print cmd
+
       info = self.makeZapyRequest(json.dumps(cmd))
 
       # print "--------->"

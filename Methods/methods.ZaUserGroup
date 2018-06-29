@@ -2,6 +2,7 @@ ZaUserGroup.addAcl
 ZaUserGroup.addUser
 ZaUserGroup.create
 ZaUserGroup.delete
+ZaUserGroup.editDesc
 ZaUserGroup.list
 ZaUserGroup.listAcl
 ZaUserGroup.listUsers
