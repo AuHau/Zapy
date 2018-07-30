@@ -67,7 +67,7 @@
 	    #
 	    cmps = {
 	       'compId': cp1.get('serverGroupId'),
-	       'edgeGateway': cp2.get('toEdgeGateway')
+	       'edgeGateway': self._cfg['components']['toEdgeGateway']
 	    }
 
 	    cmps['edgeGateway']['endServerId'] = cp2.get('endServerId')
@@ -77,13 +77,13 @@
 	    # From is EdgeGateway, To is ServerGroup
 	    #
 	    cmps = {
-	       'edgeGateway': cp1.get('fromEdgeGateway'),
+	       'edgeGateway': self._cfg['components']['fromEdgeGateway'],
 	       'compId': cp2.get('serverGroupId')
 	    }
 	    
 	    cmps['edgeGateway']['endServerId'] = cp1.get('endServerId')
 
-         # print ">>> Cmp", cmps['fromEdgeGateway']['endServerId']
+         print ">>> Cmp", cmps
 
 	 #
 	 # Make it so

@@ -4,5 +4,33 @@
    "coipWanId":      null,
    "coipWanName":    "LesCoipWanType2",
    "direction":      "biDir",
-   "components":     null
+   "components": {
+      "toEdgeGateway": {
+	 "endServerId": null,
+	 "phySubnetMap": {
+	    "phySubnet": [
+	       {
+		  "from": "10.142.90.39",
+		  "to":   "10.142.90.40"
+	       },
+	       {
+		  "from": "10.142.90.42",
+		  "to":   "10.142.90.43"
+	       }
+	    ]
+	 },
+	 "phySubnet":     null,
+	 "coipFwdSubnet": null,
+	 "phyFwdSubnet": [
+	    {
+	       "from": "10.142.90.139",
+	       "to":   "10.142.90.140"
+	    },
+	    {
+	       "from": "10.142.90.142",
+	       "to":   "10.142.90.143"
+	    }
+	 ]
+      }
+   }
 }
