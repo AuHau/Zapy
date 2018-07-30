@@ -33,11 +33,20 @@
 	 if 'endServerId' in self._cfg:
 	    self._cfg['endServerId'] = esRegistered
          
+	 #
+	 # Update 28-Jul-18: An EndServer shouldn't know about a Type 3 CoiPWan
+	 #
+	 # If we move the WAN configuration to the EG, then this code isn't needed...
+	 #
 	 if 'toEdgeGateway' in self._cfg:
 	    self._cfg['toEdgeGateway']['endServerId'] = esRegistered
 	 
 	 if 'fromEdgeGateway' in self._cfg:
 	    self._cfg['fromEdgeGateway']['endServerId'] = esRegistered
+	 
+	 #
+	 # Update 28-Jul-18: End of non-needed code
+	 #
 	 
 	 details = self.EndServer_getDetails()
 

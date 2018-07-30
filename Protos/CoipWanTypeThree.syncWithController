@@ -1,12 +1,22 @@
    def syncWithController(self, ap, cp1, cp2):
       """
-         It occurs to me that making the arguments to this routine be "AppProfile, From, To" might simplify this
-	 thing a lot...
-
-         If the CoipWanTypeOne described by the config file exists, synchronize the data structure to the controller
+         If the CoipWanTypeThree described by the config file exists, synchronize the data structure to the controller
 	 If it doesn't exist, create it.
 
 	 ToDo: Should Handle multiple ranges for From / To components - More testing needed!
+
+	 Update: 28-Jul-18: This object didn't carry the information for fromEdgeGatewat and toEdgeGateway and thus
+	 relied on that information being passed in attached to the Components (alias EndServer) that carried it in
+	 previous versions of this library.
+
+	 This update is a prototype of correcting that.
+
+	 The update changes the reference of the from/to EGs' EndServer in favor of being carried by the self of a
+	 CoipWanTypeThree object.
+
+	 However, that means I need to teach the CoipWan syncWithController functions of the CoipWan family to configure
+	 itself (i.e. use self._cfg['coipWanType'] references). I keep thinking that a 'from' or 'to' Component should really
+	 be it's own Zapy object. They are nested and complex. Might be better to make a smarter object out of them.
       """
       
       self._cfg['appProfileId'] = ap.get('appProfileId')
@@ -38,31 +48,10 @@
          # print "Adding a New '{}' CoipWan to {}".format(self._cfg['coipWanType'], ap.get('appProfileName'))
 
 	 #
-	 # Prepare Common API Command Bits
-	 #
-
-	 cmd = {
-	    'cmd':'$AppProfile.addCoipWanTypeThree',
-	    'args':{
-	       'appProfileId': self._cfg['appProfileId'],
-	       'coipWanName': self._cfg['coipWanName'],
-	       'direction': self._cfg['direction'],
-	    }
-	 }
-
-	 #
-	 # TypeThree
-	 #
-	 cmps = {
-	    'fromEdgeGateway': cp1.get('fromEdgeGateway'),
-	    'toEdgeGateway': cp2.get('toEdgeGateway')
-	 }
-
-	 #
 	 # Update the endServerIds
 	 #
-	 cmps['fromEdgeGateway']['endServerId'] = cp1.get('endServerId')
-	 cmps['toEdgeGateway']['endServerId']   = cp2.get('endServerId')
+	 self._cfg['components']['fromEdgeGateway']['endServerId'] = cp1.get('endServerId')
+	 self._cfg['components']['toEdgeGateway']['endServerId']   = cp2.get('endServerId')
 	 
 	 # print ">>> Cp1", cmps['fromEdgeGateway']['endServerId']
 	 # print ">>> Cp2", cmps['toEdgeGateway']['endServerId']
@@ -70,7 +59,16 @@
 	 #
 	 # Make it so
 	 #
-	 cmd['args'].update(cmps)
+	 cmd = {
+	    'cmd':'$AppProfile.addCoipWanTypeThree',
+	    'args':{
+	       'appProfileId': self._cfg['appProfileId'],
+	       'coipWanName': self._cfg['coipWanName'],
+	       'direction': self._cfg['direction'],
+	       'fromEdgeGateway': self._cfg['components']['fromEdgeGateway'],
+	       'toEdgeGateway': self._cfg['components']['toEdgeGateway']
+	    }
+	 }
 
 	 info = self.makeZapyRequest(json.dumps(cmd))
 
