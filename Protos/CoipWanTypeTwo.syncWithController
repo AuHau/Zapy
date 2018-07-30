@@ -83,7 +83,7 @@
 	    
 	    cmps['edgeGateway']['endServerId'] = cp1.get('endServerId')
 
-         print ">>> Cmp", cmps
+         # print ">>> Cmp", cmps
 
 	 #
 	 # Make it so

@@ -73,7 +73,7 @@ fp2.syncWithController(cd2)
 #
 # Register the EndServers for the Edge Gateways
 #
-sshPassword = getpass.getpass('   Enter Password > ')
+sshPassword = "Acme*123!" # getpass.getpass('   Enter Password > ')
 
 print 'Registering EndServer 1'
 es1 = Zapy.EndServer(zcKeys, 'Configs/cfgEndServer1.json')
@@ -88,13 +88,13 @@ es2.set('sshPassword', sshPassword)
 es2.EndServer_register(sp1)
 
 print 'Registering Edge Gateway 1'
-eg1 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway1.json')
+eg1 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway1Sa.json')
 eg1.set('endServerId', None)
 eg1.set('sshPassword', sshPassword)
 eg1.EndServer_register(fp1)
 
 print 'Registering Edge Gateway 2'
-eg2 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway2.json')
+eg2 = Zapy.EndServer(zcKeys, 'Configs/cfgEdgeGateway1Sb.json')
 eg2.set('endServerId', None)
 eg2.set('sshPassword', sshPassword)
 eg2.EndServer_register(fp2)
@@ -147,9 +147,13 @@ print 'Create CoipWan Type Two'
 cw2 = Zapy.CoipWanTypeTwo(zcKeys, 'Configs/cfgCoipWanTypeTwo.json')
 cw2.syncWithController(ap, sg2, eg3)
 
-print 'Create CoipWan Type Three'
-cw3 = Zapy.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThree.json')
+print 'Create CoipWan Type Three Sa'
+cw3 = Zapy.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThreeSa.json')
 cw3.syncWithController(ap, eg1, eg2)
+
+print 'Create CoipWan Type Three Sb'
+cw4 = Zapy.CoipWanTypeThree(zcKeys, 'Configs/cfgCoipWanTypeThreeSb.json')
+cw4.syncWithController(ap, eg1, eg2)
 
 print
 ans = raw_input("Type 'a' to to delete all, <Return> to keep EndServers > ")
