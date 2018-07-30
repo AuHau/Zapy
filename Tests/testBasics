@@ -73,7 +73,7 @@ fp2.syncWithController(cd2)
 #
 # Register the EndServers for the Edge Gateways
 #
-sshPassword = "Acme*123!" # getpass.getpass('   Enter Password > ')
+sshPassword = getpass.getpass('   Enter Password > ')
 
 print 'Registering EndServer 1'
 es1 = Zapy.EndServer(zcKeys, 'Configs/cfgEndServer1.json')
