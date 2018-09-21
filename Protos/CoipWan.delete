@@ -1,16 +1,26 @@
-   def CoipWan_delete(self):
+   def CoipWan_delete(self, *args):
       """
          Zapi Call to CoipWan.delete
+
+	 If no arguments are passed, delete this CoipWan
+	 If arguments are passed, assume args[0] == App Profile Id, args[1] == Coip Wan Id
       """
 
       info = None
 
-      if self._cfg['coipWanId'] != None:
+      if args is not None:
 	 cmd = {
 	    "cmd":"$CoipWan.delete",
-	    "args": { "coipWanId": self._cfg['coipWanId'] }
+	    "args": { "coipWanId": args[0] }
 	 }
 
-	 info = self.makeZapyRequest(json.dumps(cmd))
+      else:
+	 if self._cfg['coipWanId'] != None:
+	    cmd = {
+	       "cmd":"$CoipWan.delete",
+	       "args": { "coipWanId": self._cfg['coipWanId'] }
+	    }
+
+      info = self.makeZapyRequest(json.dumps(cmd))
 
       return info

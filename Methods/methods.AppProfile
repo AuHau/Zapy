@@ -6,9 +6,11 @@ AppProfile.addCoipWanTypeTwo
 AppProfile.addInlineDeviceGroup
 AppProfile.addServerGroup
 AppProfile.create
+AppProfile.coipWanDelete
 AppProfile.deactivate
 AppProfile.delete
 AppProfile.listCoipWans
+AppProfile.listCoipWanByName
 AppProfile.listInlineDeviceGroups
 AppProfile.listInlineDeviceGroupByName
 AppProfile.listServerGroups
