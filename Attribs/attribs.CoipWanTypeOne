@@ -1,7 +1,9 @@
-appProfileId,	None
-coipWanId,	None
-coipWanName,	None
-coipWanType,	'typeOne'
-components,	None
-direction,	None
-znsClusterId,	None
+appProfileId,	      None
+cisoTrafficWhitelist, None
+coipWanId,	      None
+coipWanName,	      None
+coipWanType,	      'typeOne'
+components,	      None
+cosiTrafficWhitelist, None
+direction,	      None
+znsClusterId,	      None

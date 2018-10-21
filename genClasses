@@ -35,8 +35,10 @@ push(@classObjs, 'CoipLan');
 push(@classObjs, 'CoipWanTypeOne');
 push(@classObjs, 'CoipWanTypeTwo');
 push(@classObjs, 'CoipWanTypeThree');
+push(@classObjs, 'ComputingFlow');
 push(@classObjs, 'EndServer');
 push(@classObjs, 'FabricServerPool');
+push(@classObjs, 'IpComponent');
 push(@classObjs, 'InlineDeviceGroup');	# Not yet implemented in Zapy but full control possible
 push(@classObjs, 'ServerGroup');
 
@@ -66,6 +68,7 @@ $errorCnt = 0;
 # Create Zapy/__init__.py
 #
 open($Fin, ">Zapy/__init__.py");
+print $Fin "name = \"Zapy\"\n";
 print $Fin "from keyChain import keyChain\n";
 
 print "Copy Master Class Files\n";
